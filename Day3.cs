@@ -3,23 +3,6 @@ using System.Collections.Generic;
 
 namespace Advent
 {
-    struct Coordinate : IEquatable<Coordinate>
-    {
-        public int x;
-        public int y;
-
-        public Coordinate(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        bool IEquatable<Coordinate>.Equals(Coordinate other)
-        {
-            return this.x == other.x && this.y == other.y;
-        }
-    }
-
     class Day3
     {
         public static void Run(List<string> input)

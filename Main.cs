@@ -15,7 +15,7 @@ namespace Advent
                     input.Add(line);
             }
 
-            Day9LinkedList.Run(input);
+            Day10.Run(input);
         }
     }
 }
