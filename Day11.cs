@@ -28,6 +28,7 @@ namespace Advent
     {
         public static void Run(List<string> input)
         {
+            DateTime startTime = DateTime.Now;
             int serial = 7689;
             int gridTotal = 0;
             int[][] grid = new int[300][];
@@ -62,7 +63,8 @@ namespace Advent
             }
             
             int maxLength = 3;
-            for (int length = 4; length < 286; length++) //max power at 3x3 was 31, so 3x3 is the minimum possible optimal size. total of all grid power values was -40310, so the largest possible area is (90000 - 40341/5) square units, or 286x286 or smaller
+            int stoppingPoint = 286;
+            for (int length = 4; length < stoppingPoint; length++) //max power at 3x3 was 31, so 3x3 is the minimum possible optimal size. total of all grid power values was -40310, so the largest possible area is (90000 - 40341/5) square units, or 286x286 or smaller
             {
                 int maxPowerLength = Int32.MinValue;
                 Coordinate maxCornerLength = new Coordinate(-1, -1);
@@ -78,6 +80,7 @@ namespace Advent
                         if (candidates[i][j] > maxPowerLength)
                         {
                             maxPowerLength = candidates[i][j];
+                            stoppingPoint = (int)Math.Sqrt(90000 - (40310 + maxPowerLength) / 5);
                             maxCornerLength = new Coordinate(i + 1, j + 1);
                         }
                     }
@@ -90,7 +93,8 @@ namespace Advent
                     maxLength = length;
                 }
             }
-            Console.WriteLine(String.Format("{0}, {1}", maxCorner.ToString(), maxLength));
+            Console.WriteLine(String.Format("{0}, {1}: Power = {2}", maxCorner.ToString(), maxLength, maxPower));
+            Console.WriteLine(DateTime.Now - startTime);
         }
     }
 }
