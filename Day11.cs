@@ -17,10 +17,8 @@ namespace Advent
 
         public int getPower(int serial)
         {
-            int start = (this.y * getRackID() + serial) * getRackID();
-            start /= 100;
-            int digit = start % 10;
-            return digit - 5;
+            int start = (this.y * getRackID() + serial) * getRackID() / 100;
+            return start % 10 - 5;
         }
     }
 
@@ -45,9 +43,9 @@ namespace Advent
 
             int[][] candidates = new int[298][];
             for (int i = 0; i < 298; i++)
-                candidates[i] = Enumerable.Repeat(0, 298).ToArray();
+                candidates[i] = new int[298];
             int maxPower = Int32.MinValue;
-            Coordinate maxCorner = new Coordinate(-1, -1);
+            Coordinate maxCorner = null;
 
             for (int i = 0; i < candidates.Length; i++)
             {
@@ -63,24 +61,23 @@ namespace Advent
             }
             
             int maxLength = 3;
-            int stoppingPoint = 286;
-            for (int length = 4; length < stoppingPoint; length++) //max power at 3x3 was 31, so 3x3 is the minimum possible optimal size. total of all grid power values was -40310, so the largest possible area is (90000 - 40341/5) square units, or 286x286 or smaller
+            for (int length = 4; length < 286; length++) //max power at 3x3 was 31, so 3x3 is the minimum possible optimal size. total of all grid power values was -40310, so the largest possible area is (90000 - 40341/5) square units, or 286x286 or smaller
             {
-                int maxPowerLength = Int32.MinValue;
-                Coordinate maxCornerLength = new Coordinate(-1, -1);
+                int maxPowerLength = 31;
+                Coordinate maxCornerLength = null;
                 for (int i = 0; i < candidates.Length - length; i++)
                 {
                     for (int j = 0; j < candidates.Length - length; j++)
                     {
-                        for (int iIndex = 0; iIndex < length; iIndex++)
-                            candidates[i][j] += grid[i + iIndex][j + length - 1];
-                        for (int jIndex = 0; jIndex < length; jIndex++)
-                            candidates[i][j] += grid[i + length - 1][j + jIndex];
+                        for (int addIndex = 0; addIndex < length; addIndex++)
+                        {
+                            candidates[i][j] += grid[i + addIndex][j + length - 1];
+                            candidates[i][j] += grid[i + length - 1][j + addIndex];
+                        }
 
                         if (candidates[i][j] > maxPowerLength)
                         {
                             maxPowerLength = candidates[i][j];
-                            stoppingPoint = (int)Math.Sqrt(90000 - (40310 + maxPowerLength) / 5);
                             maxCornerLength = new Coordinate(i + 1, j + 1);
                         }
                     }
