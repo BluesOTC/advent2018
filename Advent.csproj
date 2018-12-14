@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdventStructs.cs" />
+    <Compile Include="Day14.cs" />
     <Compile Include="Day1.cs" />
     <Compile Include="Day10.cs" />
     <Compile Include="Day11.cs" />
