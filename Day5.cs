@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text;
 
 namespace Advent
 {
@@ -19,26 +20,18 @@ namespace Advent
             }
 
             //Part 1
-            string[] splitLine = input.Split(' ');
+            StringBuilder polymer = new StringBuilder(input);
+            for (int index = 0; index < polymer.Length - 2; index++)
             {
-                List<char> polymer = input.ToCharArray().ToList();
-                bool wasAnyRemoved = true;
-                while (wasAnyRemoved)
+                if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
                 {
-                    wasAnyRemoved = false;
-                    for (int index = 0; index < polymer.Count - 1; index++)
-                    {
-                        if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
-                        {
-                            polymer[index] = polymer[index + 1] = (char)1;
-                            wasAnyRemoved = true;
-                            index++;
-                        }
-                    }
-                    polymer.RemoveAll(x => x == (char)1);
+                    polymer.Remove(index, 2);
+                    index--;
+                    if (index > 0)
+                        index--;
                 }
-                Console.WriteLine("Polymer Length: " + polymer.Count);
             }
+            Console.WriteLine("Polymer Length: " + polymer.Length);
 
             //Part 2
             char[] unitTypes = input.ToUpper().ToCharArray().Distinct().ToArray();
@@ -46,25 +39,28 @@ namespace Advent
             char bestChar = '\0';
             foreach (char candidate in unitTypes)
             {
-                bool wasAnyRemoved = true;
-                List<char> polymer = input.Where(x => x != candidate && x != candidate + 32).ToList();
-                while (wasAnyRemoved)
+                polymer = new StringBuilder(input);
+                for (int index = 0; index < polymer.Length - 2; index++)
                 {
-                    wasAnyRemoved = false;
-                    for (int index = 0; index < polymer.Count - 1; index++)
+                    if (polymer[index] == candidate || polymer[index] == candidate + 32)
                     {
-                        if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
-                        {
-                            polymer[index] = polymer[index + 1] = (char)1;
-                            wasAnyRemoved = true;
-                            index++;
-                        }
+                        polymer.Remove(index, 1);
+                        if (index > 0)
+                            index--;
+                        if (index == polymer.Length)
+                            break;
                     }
-                    polymer.RemoveAll(x => x == (char)1);
+                    if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
+                    {
+                        polymer.Remove(index, 2);
+                        index--;
+                        if (index > 0)
+                            index--;
+                    }
                 }
-                if(polymer.Count < minLength)
+                if (polymer.Length < minLength)
                 {
-                    minLength = polymer.Count;
+                    minLength = polymer.Length;
                     bestChar = candidate;
                 }
             }
