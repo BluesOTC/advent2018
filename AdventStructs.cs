@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Advent
 {
@@ -28,9 +24,29 @@ namespace Advent
             this.y += other.y;
         }
 
+        public Coordinate AddVector(Coordinate other)
+        {
+            return new Coordinate(this.x + other.x, this.y + other.y);
+        }
+
+        public Coordinate GetVector(Coordinate source)
+        {
+            return new Coordinate(this.x - source.x, this.y - source.y);
+        }
+
         public override string ToString()
         {
             return String.Format("<{0}, {1}>", this.x, this.y);
+        }
+
+        public int findManhattanDistance(int x, int y)
+        {
+            return Math.Abs(this.x - x) + Math.Abs(this.y - y);
+        }
+
+        public int findManhattanDistance(Coordinate other)
+        {
+            return Math.Abs(this.x - other.x) + Math.Abs(this.y - other.y);
         }
     }
 }

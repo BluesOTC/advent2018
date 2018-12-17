@@ -15,7 +15,7 @@ namespace Advent
                     input.Add(line);
             }
 
-            Day14.Run(input);
+            Day15Dijkstra.Run(input);
         }
     }
 }
