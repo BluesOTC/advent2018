@@ -68,7 +68,7 @@ namespace Advent
                 if (elfAssignments[c] > time)
                     time = elfAssignments[c];
             }
-            Console.WriteLine("Finish time: " + time);
+            Console.WriteLine("\nFinish time: " + time);
         }
 
         static void fillAssignments(ref Dictionary<char, int> elfAssignments, List<char> completedSteps, ref List<char> remainingSteps, int time, Dictionary<char, List<char>> stepTree)

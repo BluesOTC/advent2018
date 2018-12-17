@@ -53,22 +53,6 @@ namespace Advent
                 }
             }
 
-            //Day 6-2
-            int area = 0;
-            for (int r = 1; r < grid.Length - 1; r++)
-            {
-                for (int c = 1; c < grid[r].Length - 1; c++)
-                {
-                    int sum = 0;
-                    for (int index = 0; index < coordinates.Count; index++)
-                        sum += findManhattanDistance(r + minX - 1, c + minY - 1, coordinates[index][0], coordinates[index][1]);
-                    if (sum < 10000)
-                        area++;
-                }
-            }
-
-            Console.WriteLine("Safe Area Size: " + area);
-
             //Day 6-1
             for (int row = 1; row < grid.Length; row++)
             {
@@ -124,12 +108,12 @@ namespace Advent
                 {
                     if (point >= 0)
                         areas[point]++;
-                    Console.Write(point);
-                    if (point >= 0 && point < 10)
+                    //Console.Write(point);
+                    /*if (point >= 0 && point < 10)
                         Console.Write(" ");
-                    Console.Write(",");
+                    Console.Write(",");*/
                 }
-                Console.Write("\n");
+                //Console.Write("\n");
             }
 
             int maxArea = -1;
@@ -138,6 +122,22 @@ namespace Advent
                     maxArea = currArea;
 
             Console.WriteLine("Max Area: " + maxArea);
+
+            //Day 6-2
+            int area = 0;
+            for (int r = 1; r < grid.Length - 1; r++)
+            {
+                for (int c = 1; c < grid[r].Length - 1; c++)
+                {
+                    int sum = 0;
+                    for (int index = 0; index < coordinates.Count; index++)
+                        sum += findManhattanDistance(r + minX - 1, c + minY - 1, coordinates[index][0], coordinates[index][1]);
+                    if (sum < 10000)
+                        area++;
+                }
+            }
+
+            Console.WriteLine("Safe Area Size: " + area);
         }
 
         static int findManhattanDistance(int x1, int y1, int x2, int y2)

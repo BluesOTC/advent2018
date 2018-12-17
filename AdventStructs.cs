@@ -18,6 +18,16 @@ namespace Advent
             return this.x == other.x && this.y == other.y;
         }
 
+        public override bool Equals(object other)
+        {
+            return this.x == ((Coordinate)other).x && this.y == ((Coordinate)other).y;
+        }
+
+        public override int GetHashCode()
+        {
+            return 10000 * x + y;
+        }
+
         public void Add(Coordinate other)
         {
             this.x += other.x;

@@ -26,7 +26,7 @@ namespace Advent
         NUM_TYPES
     }
 
-    class Day16Part1
+    class Day16
     {
         public static void Run()
         {

@@ -59,7 +59,8 @@ namespace Advent
                     }
                 }
             }
-            
+            Console.WriteLine(String.Format("Part 1: {0}: Power = {1}", maxCorner.ToString(), maxPower));
+
             int maxLength = 3;
             for (int length = 4; length < 286; length++) //max power at 3x3 was 31, so 3x3 is the minimum possible optimal size. total of all grid power values was -40310, so the largest possible area is (90000 - 40341/5) square units, or 286x286 or smaller
             {
@@ -90,7 +91,7 @@ namespace Advent
                     maxLength = length;
                 }
             }
-            Console.WriteLine(String.Format("{0}, {1}: Power = {2}", maxCorner.ToString(), maxLength, maxPower));
+            Console.WriteLine(String.Format("Part 2: {0}, {1}: Power = {2}", maxCorner.ToString(), maxLength, maxPower));
         }
     }
 }

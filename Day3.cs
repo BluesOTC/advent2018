@@ -42,6 +42,7 @@ namespace Advent
                     }
                 }
             }
+            Console.WriteLine("Conflicts: " + conflicts.Count);
 
             //Day 3-2
             foreach (string line in input)
@@ -50,7 +51,6 @@ namespace Advent
                 if (!hasAnyConflicts(Int32.Parse(splitLine[3]), Int32.Parse(splitLine[4]), Int32.Parse(splitLine[6]), Int32.Parse(splitLine[7]), conflicts))
                     Console.Write("Notable Claim: " + splitLine[0] + "\n");
             }
-            Console.WriteLine("Conflicts: " + conflicts.Count);
         }
 
         static bool hasAnyConflicts(int x, int y, int w, int h, HashSet<Coordinate> conflicts)

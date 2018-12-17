@@ -17,10 +17,12 @@ namespace Advent
                 splitLine = reader.ReadLine().Split(' ').Select(x => Int32.Parse(x)).ToArray();
             }
             int index = 0;
-            Console.WriteLine("Sum: " + processChild(splitLine, ref index));
+            Console.WriteLine("Part 1 Sum: " + processChildPart1(splitLine, ref index));
+            index = 0;
+            Console.WriteLine("Part 2 Sum: " + processChildPart2(splitLine, ref index));
         }
 
-        static int processChild(int[] input, ref int index)
+        static int processChildPart2(int[] input, ref int index)
         {
             int children = input[index];
             index++;
@@ -31,7 +33,7 @@ namespace Advent
             if (children > 0)
             {
                 for (int i = 0; i < children; i++)
-                    childValues[i] = processChild(input, ref index);
+                    childValues[i] = processChildPart2(input, ref index);
                 for (int i = 0; i < metadataEntries; i++)
                 {
                     if (input[index] - 1 < childValues.Count())
@@ -46,6 +48,26 @@ namespace Advent
                     sum += input[index];
                     index++;
                 }
+            }
+            return sum;
+        }
+
+        static int processChildPart1(int[] input, ref int index)
+        {
+            int children = input[index];
+            index++;
+            int metadataEntries = input[index];
+            index++;
+            int sum = 0;
+            if (children > 0)
+            {
+                for (int i = 0; i < children; i++)
+                    sum += processChildPart1(input, ref index);
+            }
+            for (int i = 0; i < metadataEntries; i++)
+            {
+                sum += input[index];
+                index++;
             }
             return sum;
         }

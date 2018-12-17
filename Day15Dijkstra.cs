@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Advent
 {
-    class Node : Coordinate, IComparable<Node>, IEqualityComparer<Node>, IEquatable<Node>
+    class Node : Coordinate, IComparable<Node>
     {
         public Node parent;
 
@@ -21,31 +21,6 @@ namespace Advent
             if ((diff = this.y - other.y) != 0)
                 return diff;
             return this.x - other.x;
-        }
-
-        bool IEqualityComparer<Node>.Equals(Node x, Node y)
-        {
-            return x.x == y.x && x.y == y.y;
-        }
-
-        bool IEquatable<Node>.Equals(Node other)
-        {
-            return this.x == other.x && this.y == other.y;
-        }
-
-        public override bool Equals(object other)
-        {
-            return this.x == ((Node)other).x && this.y == ((Node)other).y;
-        }
-
-        public override int GetHashCode()
-        {
-            return 100 * x + y;
-        }
-
-        int IEqualityComparer<Node>.GetHashCode(Node obj)
-        {
-            return 100 * obj.x + obj.y;
         }
     }
 

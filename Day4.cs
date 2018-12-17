@@ -70,6 +70,7 @@ namespace Advent
                     iBestMinute = minute;
                 }
             }
+            Console.WriteLine("Part 1: ID x Minute: " + iBestID * iBestMinute);
 
             //Day 4-2
             iBestMinute = -1;
@@ -87,8 +88,7 @@ namespace Advent
                     }
                 }
             }
-
-            Console.WriteLine("ID x Minute: " + iBestID * iBestMinute);
+            Console.WriteLine("Part 2: ID x Minute: " + iBestID * iBestMinute);
         }
     }
 }

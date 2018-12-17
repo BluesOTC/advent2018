@@ -8,21 +8,22 @@ namespace Advent
 {
     class Day5Regex
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
             Console.WriteLine();
             Console.WriteLine("Day 5");
 
-            string[] splitLine;
+            string input;
             using (StreamReader reader = new StreamReader("input5.txt"))
             {
-                splitLine = reader.ReadLine().Split(' ');
+                input = reader.ReadLine();
             }
+            string[] splitLine = input.Split(' ');
             //Regex nonsense. Slow!
             string pattern = @"(.)(?!\1)(?i:\1)";
             Regex comp10 = new Regex(pattern, RegexOptions.Compiled);
 
-            string fullpolymer = input[0];
+            string fullpolymer = input;
             {
                 int startLength;
                 do
