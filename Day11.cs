@@ -75,10 +75,10 @@ namespace Advent
                         }
                         else if (j > length - 1)
                             areaPower -= grid[i][j - length];
-                        if (areaPower > maxPower)
+                        if (areaPower > maxPowerLength)
                         {
                             maxPowerLength = areaPower;
-                            maxPowerCorner = new Coordinate(i + 1, j + 1);
+                            maxPowerCorner = new Coordinate(i + 2 - length, j + 2 - length);
                         }
                     }
                 }
