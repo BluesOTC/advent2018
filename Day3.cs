@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Advent
 {
     class Day3
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 3");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input3.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             HashSet<Coordinate> claims = new HashSet<Coordinate>();
             HashSet<Coordinate> conflicts = new HashSet<Coordinate>();
             foreach (string line in input)

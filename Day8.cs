@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Advent
 {
     class Day8
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
-            string[] splitLineString = input[0].Split(' ');
-            int[] splitLine = input[0].Split(' ').Select(x => Int32.Parse(x)).ToArray();
+            Console.WriteLine();
+            Console.WriteLine("Day 8");
+
+            int[] splitLine;
+            using (StreamReader reader = new StreamReader("input8.txt"))
+            {
+                splitLine = reader.ReadLine().Split(' ').Select(x => Int32.Parse(x)).ToArray();
+            }
             int index = 0;
             Console.WriteLine("Sum: " + processChild(splitLine, ref index));
         }

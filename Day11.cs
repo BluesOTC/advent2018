@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Advent
 {
@@ -24,9 +22,11 @@ namespace Advent
 
     class Day11
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
-            DateTime startTime = DateTime.Now;
+            Console.WriteLine();
+            Console.WriteLine("Day 11");
+
             int serial = 7689;
             int gridTotal = 0;
             int[][] grid = new int[300][];
@@ -91,7 +91,6 @@ namespace Advent
                 }
             }
             Console.WriteLine(String.Format("{0}, {1}: Power = {2}", maxCorner.ToString(), maxLength, maxPower));
-            Console.WriteLine(DateTime.Now - startTime);
         }
     }
 }

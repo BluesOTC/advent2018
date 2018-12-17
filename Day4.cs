@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Advent
 {
     class Day4
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 4");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input4.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             input.Sort();
             Dictionary<int, int[]> sleepTable = new Dictionary<int, int[]>();
             int currID = -1;

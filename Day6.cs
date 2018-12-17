@@ -1,13 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace Advent
 {
     class Day6
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 6");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input6.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             int minX, minY, maxX, maxY;
             minX = minY = Int32.MaxValue;
             maxX = maxY = -1;

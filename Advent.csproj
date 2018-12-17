@@ -64,7 +64,6 @@
     <Compile Include="Day7.cs" />
     <Compile Include="Day8.cs" />
     <Compile Include="Day9LinkedList.cs" />
-    <Compile Include="Day9Naive.cs" />
     <Compile Include="Main.cs" />
   </ItemGroup>
   <ItemGroup>

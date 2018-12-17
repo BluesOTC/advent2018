@@ -1,13 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace Advent
 {
     class Day2
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 2");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input2.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             int count2 = 0;
             int count3 = 0;
             bool flag2 = false;

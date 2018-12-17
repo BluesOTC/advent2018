@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
     class Day10
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 10");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input10.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
             List<List<Coordinate>> points = new List<List<Coordinate>>();
             int ymax = Int32.MinValue;
             int ymaxvel = 0;
@@ -35,7 +44,7 @@ namespace Advent
                 }
             }
 
-            int maxDistance = 236; //single-line limit on my console :P
+            int maxDistance = 236;
             int minSteps = (ymax - ymin - maxDistance / 2) / (yminvel - ymaxvel);
             int additionalSteps = (ymax - ymin + maxDistance / 2) / (yminvel - ymaxvel) - minSteps;
 

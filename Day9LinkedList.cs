@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
     class Day9LinkedList
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
-            string[] splitLine = input[0].Split(' ');
+            Console.WriteLine();
+            Console.WriteLine("Day 9");
+
+            string[] splitLine; 
+            using (StreamReader reader = new StreamReader("input9.txt"))
+            {
+                splitLine = reader.ReadLine().Split(' ');
+            }
             int players = Int32.Parse(splitLine[0]);
-            int lastMarble = Int32.Parse(splitLine[6]) * 100;
+            int lastMarble = Int32.Parse(splitLine[6]);
             lastMarble -= lastMarble % 23;
 
             LinkedList<int> marbles = new LinkedList<int>();
             long[] scores = new long[players];
             marbles.AddFirst(0);
             LinkedListNode<int> currentNode = marbles.First;
-            for (int marble = 1; marble <= lastMarble; marble++)
+            for (int marble = 1; marble <= lastMarble * 100; marble++)
             {
                 if (marble % 23 == 0)
                 {
@@ -58,6 +63,16 @@ namespace Advent
                         marbles.AddAfter(currentNode, marble);
                         currentNode = currentNode.Next;
                     }
+                }
+                if (marble == lastMarble)
+                {
+                    long part1Score = 0;
+                    foreach (long score in scores)
+                    {
+                        if (score > part1Score)
+                            part1Score = score;
+                    }
+                    Console.WriteLine("Part 1 Score: " + part1Score);
                 }
             }
 

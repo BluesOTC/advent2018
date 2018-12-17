@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace Advent
 {
@@ -8,6 +9,14 @@ namespace Advent
     {
         public static void Run(List<string> input)
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 5");
+
+            string[] splitLine;
+            using (StreamReader reader = new StreamReader("input5.txt"))
+            {
+                splitLine = reader.ReadLine().Split(' ');
+            }
             char[] unitTypes = input[0].ToUpper().ToCharArray().Distinct().ToArray();
             foreach (char candidate in unitTypes)
             {

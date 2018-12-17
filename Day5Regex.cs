@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Advent
 {
@@ -9,6 +10,14 @@ namespace Advent
     {
         public static void Run(List<string> input)
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 5");
+
+            string[] splitLine;
+            using (StreamReader reader = new StreamReader("input5.txt"))
+            {
+                splitLine = reader.ReadLine().Split(' ');
+            }
             //Regex nonsense. Slow!
             string pattern = @"(.)(?!\1)(?i:\1)";
             Regex comp10 = new Regex(pattern, RegexOptions.Compiled);
