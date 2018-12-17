@@ -31,7 +31,7 @@ namespace Advent
     {
         public static void Run(List<string> input)
         {
-            //int total = 0;
+            int total = 0;
             List<List<OperationType>> opcodeCandidates = new List<List<OperationType>>();
             for(OperationType op = OperationType.ADDR; op < OperationType.NUM_TYPES; op++)
                 opcodeCandidates.Add(Enumerable.Range(0, (int)OperationType.NUM_TYPES).Cast<OperationType>().ToList());
@@ -43,40 +43,52 @@ namespace Advent
                 int[] operands = new int[] { Int32.Parse(operation[1]), Int32.Parse(operation[2]), Int32.Parse(operation[3]) };
                 int currOpcode = Int32.Parse(operation[0]);
                 int[] after = new int[] { input[index + 2][9] - '0', input[index + 2][12] - '0', input[index + 2][15] - '0', input[index + 2][18] - '0' };
-                //int validOpcodes = 0;
+                int validOpcodes = 0;
                 for(OperationType opcode = OperationType.ADDR; opcode < OperationType.NUM_TYPES; opcode++)
                 {
-                    if (!opcodeCandidates[currOpcode].Contains(opcode))
-                        continue;
                     int[] result = doOperation(opcode, before, operands);
-                    //int validOp = 1;
+                    bool validOp = true;
                     for(int i = 0; i < result.Length; i++)
                     {
                         if (result[i] != after[i])
                         {
                             opcodeCandidates[currOpcode].Remove(opcode);
-                            //validOp = 0;
+                            validOp = false;
                             break;
                         }
                     }
-                    /*validOpcodes += validOp;
-                    if (validOp == 1)
-                        Console.Write(opcode + ", ");
-                    if (validOpcodes >= 3)
+                    if (validOp)
                     {
-                        //Console.Write("index: " + index);
-                        total++;
-                        break;
-                    }*/
+                        validOpcodes++;
+                        if (validOpcodes == 3)
+                            total++;
+                    }
                 }
             }
-            foreach(List<OperationType> candidates in opcodeCandidates)
+            Dictionary<int, OperationType> assignedOpcodes = new Dictionary<int, OperationType>();
+            while(assignedOpcodes.Count < (int)OperationType.NUM_TYPES)
             {
-                foreach (OperationType op in candidates)
-                    Console.Write(op + ", ");
-                Console.WriteLine();
+                for (int index = 0; index < (int)OperationType.NUM_TYPES; index++)
+                {
+                    if (assignedOpcodes.ContainsKey(index))
+                        continue;
+                    List<OperationType> toRemove = assignedOpcodes.Values.ToList();
+                    opcodeCandidates[index].RemoveAll(x => toRemove.Contains(x));
+                }
+                for (int index = 0;index < (int)OperationType.NUM_TYPES; index++)
+                {
+                    if (assignedOpcodes.ContainsKey(index))
+                        continue;
+                    if (opcodeCandidates[index].Count == 1)
+                        assignedOpcodes.Add(index, opcodeCandidates[index][0]);
+                }
             }
-            //Console.WriteLine(String.Format("{0} samples can be generated from 3+ opcodes", total));
+            for (int index = 0; index < opcodeCandidates.Count; index++)
+            {
+                foreach (OperationType op in opcodeCandidates[index])
+                    Console.WriteLine(index + ": " + op);
+            }
+            Console.WriteLine(String.Format("{0} samples can be generated from 3+ opcodes", total));
         }
 
         static int[] doOperation(OperationType opcode, int[] before, int[] operands)
@@ -134,7 +146,7 @@ namespace Advent
                     result[operands[2]] = before[operands[0]] > before[operands[1]] ? 1 : 0;
                     return result;
                 default:
-                    return result;
+                    return null;
             }
         }
     }
