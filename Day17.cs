@@ -59,7 +59,7 @@ namespace Advent
                 return 0;
             if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
                 return 0;
-            return 1 + floodFill(x + 1, y, ref grid) + floodFill(x - 1, y, ref grid) + floodFill(x, y + 1, ref grid);
+            return 1 + floodFill(x + 1, y, ref grid) + floodFill(x - 1, y, ref grid) + floodFill(x, y + 1, ref grid); //only go left/right if ~/# are under... return...?
         }
     }
 }

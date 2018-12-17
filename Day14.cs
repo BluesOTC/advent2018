@@ -8,17 +8,19 @@ namespace Advent
 {
     class Day14
     {
-        public static void Run(List<string> unnecessary)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 14");
+
             List<int> scoreboard = new List<int> { 3, 7 };
             int elf1 = 0;
             int elf2 = 1;
             int recipes = 2;
             int index = 0;
-            //int[] input = new int[] { 6, 3, 3, 6, 0, 1 };
-            int[] input = new int[] { 0, 1, 2, 4, 5 };
+            int[] input = new int[] { 6, 3, 3, 6, 0, 1 };
 
-            //while (recipes <= 633611)
+            bool part1Printed = false;
             while(index < input.Length)
             {
                 int sum = scoreboard[elf1] + scoreboard[elf2];
@@ -41,11 +43,18 @@ namespace Advent
                 }
                 elf1 = (elf1 + scoreboard[elf1] + 1) % scoreboard.Count;
                 elf2 = (elf2 + scoreboard[elf2] + 1) % scoreboard.Count;
+
+                if (scoreboard.Count >= 633611 && !part1Printed)
+                {
+                    Console.Write("Next recipes after 633601: ");
+                    foreach (int i in scoreboard.GetRange(633601, 10))
+                        Console.Write(i);
+                    Console.WriteLine();
+                    part1Printed = true;
+                }
             }
 
-            //foreach (int i in scoreboard.GetRange(633601, 10)) //for part 1
-            //    Console.Write(i);
-            Console.WriteLine(recipes - index);
+            Console.WriteLine("Recipes before 633601 shows up: " + (recipes - index));
         }
     }
 }

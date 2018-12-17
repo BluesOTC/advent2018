@@ -8,23 +8,6 @@ namespace Advent
     {
         public static void Run()
         {
-            List<string> input = new List<string>();
-            using (StreamReader reader = new StreamReader("input16-2.txt"))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                    input.Add(line);
-            }
-
-            int[] registers = new int[] { 0, 0, 0, 0 };
-            for (int index = 0; index < input.Count; index++)
-            {
-                string[] operation = input[index].Split(' ');
-                int[] operands = new int[] { Int32.Parse(operation[1]), Int32.Parse(operation[2]), Int32.Parse(operation[3]) };
-                int currOpcode = Int32.Parse(operation[0]);
-                registers = doOperation(currOpcode, registers, operands);
-            }
-            Console.WriteLine(registers[0]);
         }
 
         static int[] doOperation(int opcode, int[] before, int[] operands)

@@ -6,12 +6,6 @@ using System.IO;
 
 namespace Advent
 {
-    public enum EntityType
-    {
-        ELF,
-        GOBLIN,
-        NUM_TYPES
-    }
     class Node : Coordinate, IComparable<Node>, IEqualityComparer<Node>, IEquatable<Node>
     {
         public Node parent;
@@ -227,6 +221,8 @@ namespace Advent
     {
         public static void Run()
         {
+            Console.WriteLine("Day 15");
+
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input15.txt"))
             {
@@ -280,7 +276,7 @@ namespace Advent
                         {
                             if (killed.entityType == 'E')
                             {
-                                Console.WriteLine("An elf died :(");
+                                //Console.WriteLine("An elf died :(");
                                 elfDead = true;
                                 if (elfDamage != 3)
                                 {
@@ -293,15 +289,15 @@ namespace Advent
                     }
                     if (combatOver)
                         break;
-                    //Thread.Sleep(80); //for watching animated map movement
-                    Console.Clear();
+                    /*Thread.Sleep(80); //for watching animated map movement
+                    Console.Clear();*/
 
                     round++;
-                    Console.WriteLine("R" + round);
+                    /*Console.WriteLine("R" + round);
                     foreach (char[] line in grid)
                     {
                         Console.WriteLine(new string(line));
-                    }
+                    }*/
                 }
                 if (elfDamage == 3)
                 {
@@ -319,7 +315,9 @@ namespace Advent
                 }
                 elfDamage++;
                 if (elfDead)
-                    Console.WriteLine("Elf died in round " + round + ", upping damage to " + elfDamage);
+                {
+                    //Console.WriteLine("Elf died in round " + round + ", upping damage to " + elfDamage);
+                }
                 else
                     Console.WriteLine("All elves survive when they deal " + elfDamage + " damage");
                 combatOver = false;
@@ -337,7 +335,7 @@ namespace Advent
                     hpSum += elf.hp;
             }
             Console.WriteLine(String.Format("Base Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", baseRound, baseHPSum, baseRound * baseHPSum));
-            Console.WriteLine(String.Format("Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", round, hpSum, round * hpSum));
+            Console.WriteLine(String.Format("Elf Survival Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", round, hpSum, round * hpSum));
         }
     }
 }

@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Advent
 {
     class Day12
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 12");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input12.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             int generations = 20000;
-            DateTime startTime = DateTime.Now;
             string state = input[0].Split(' ')[2];
             List<string> activations = new List<string>();
 
@@ -26,8 +35,11 @@ namespace Advent
             currGeneration.Append(new string('.', 2));
             int offset = 2;
 
+            bool shouldBreak = false;
+            int plantShift = 0;
+            int generation = 0;
             HashSet<string> patternsSeen = new HashSet<string>();
-            for (int generation = 0; generation < generations; generation++) //edit generation number after first run to see how plant pattern shifts
+            for (; generation < generations; generation++) //edit generation number after first run to see how plant pattern shifts
             {
                 char[] currState = new char[currGeneration.Length];
                 currGeneration.CopyTo(0, currState, 0, currGeneration.Length);
@@ -47,25 +59,47 @@ namespace Advent
                 if (nextGeneration.ToString().LastIndexOf('#') >= nextGeneration.Length - 3)
                     nextGeneration.Append("..");
                 currGeneration = nextGeneration;
-                /*if (patternsSeen.Contains(currGeneration.ToString().Trim('.')))
+                if (patternsSeen.Contains(currGeneration.ToString().Trim('.')))
                 {
-                    Console.WriteLine(String.Format("Repeat Pattern found at generation {0}", generation));
-                    Console.WriteLine(String.Format("First plant found at pot #{0}", currGeneration.ToString().IndexOf('#')));
-                    //break;
+                    //Console.WriteLine(String.Format("Repeat Pattern found at generation {0}", generation));
+                    //Console.WriteLine(String.Format("First plant found at pot #{0}", currGeneration.ToString().IndexOf('#')));
+                    if (shouldBreak)
+                        break;
+                    shouldBreak = true;
+                    plantShift = currGeneration.ToString().IndexOf('#');
                 }
                 else
-                    patternsSeen.Add(currGeneration.ToString().Trim('.'));*/
+                    patternsSeen.Add(currGeneration.ToString().Trim('.'));
+                if (generation == 20)
+                {
+                    int part1Total = 0;
+                    int part1Plants = 0;
+                    for (int index = 0; index < currGeneration.Length; index++)
+                    {
+                        if (currGeneration[index] == '#')
+                        {
+                            part1Plants++;
+                            part1Total += (index - offset);
+                        }
+                    }
+                    Console.WriteLine("Generation 20 Sum Product: " + part1Total + " from " + part1Plants + " plants");
+                }
             }
 
-            int total = 0;
+            long total = 0;
             int plants = 0;
+            plantShift = currGeneration.ToString().IndexOf('#') - plantShift;
             for (int index = 0; index < currGeneration.Length; index++)
             {
-                plants++;
-                total += (currGeneration[index] == '#' ? 1 : 0) * (index - offset);
-            } 
-            Console.WriteLine("Sum Product: " + total + " from " + plants + " plants");
-            Console.WriteLine(DateTime.Now - startTime);
+                if (currGeneration[index] == '#')
+                {
+                    plants++;
+                    total += (index - offset);
+                }
+            }
+            //Console.WriteLine("Repeat Generation Sum Product: " + total + " from " + plants + " plants");
+            long finalTotal = total + (long)plantShift * (50000000000L - (long)generation) * (long)plants;
+            Console.WriteLine("Generation 50b: Sum Product: " + finalTotal + " from " + plants + " plants");
         }
     }
 }

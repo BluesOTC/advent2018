@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
@@ -135,8 +133,19 @@ namespace Advent
 
     class Day13
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 13");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input13.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             List<char[]> grid = new List<char[]>();
             List<char[]> origGrid = new List<char[]>();
             List<Cart> carts = new List<Cart>();
@@ -175,6 +184,7 @@ namespace Advent
             }
 
             bool hasCrashed = false;
+            bool firstCrash = true;
             while (carts.Count > 1)
             {
                 List<Cart> next = new List<Cart>(carts);
@@ -185,10 +195,13 @@ namespace Advent
                         continue;
                     if (hasCrashed = c.move(ref grid))
                     {
-                        int removed = next.RemoveAll(x => x.x == c.x && x.y == c.y);
+                        next.RemoveAll(x => x.x == c.x && x.y == c.y);
                         grid[c.y][c.x] = origGrid[c.y][c.x];
-                        //Console.WriteLine("Crashed! " + c.x + "," + c.y);
-                        //break;
+                        if (firstCrash)
+                        {
+                            Console.WriteLine("First Crash! " + c.x + "," + c.y);
+                            firstCrash = false;
+                        }
                     }
                 }
                 carts = next;
