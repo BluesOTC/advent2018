@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.IO;
 
 namespace Advent
 {
@@ -75,11 +76,7 @@ namespace Advent
         {
             HashSet<Node> candidateGoals = getCandidateGoals(targets);
             if (candidateGoals.Count == 0)
-            {
-                //Console.WriteLine("No valid targets!");
                 return;
-            }
-            //Console.WriteLine("Pathfinding!");
 
             HashSet<Node> openNodes = new HashSet<Node>();
             HashSet<Node> closedNodes = new HashSet<Node>();
@@ -195,7 +192,7 @@ namespace Advent
             return targetsInRange;
         }
 
-        Entity doAttack(List<Entity> targets) //hp tiebreaker
+        Entity doAttack(List<Entity> targets)
         {
             targets.Sort();
             int minHP = 201;
@@ -228,8 +225,16 @@ namespace Advent
 
     class Day15Dijkstra
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input15.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             List<char[]> grid = new List<char[]>();
             List<Entity> entities = new List<Entity>();
 
@@ -237,6 +242,8 @@ namespace Advent
             bool elfDead = true;
             int elfDamage = 3;
             int round = 0;
+            int baseRound = 0;
+            int baseHPSum = 0;
             while (elfDead)
             {
                 entities.Clear();
@@ -275,15 +282,18 @@ namespace Advent
                             {
                                 Console.WriteLine("An elf died :(");
                                 elfDead = true;
-                                combatOver = true;
-                                break;
+                                if (elfDamage != 3)
+                                {
+                                    combatOver = true;
+                                    break;
+                                }
                             }
                             entities.Remove(killed);
                         }
                     }
                     if (combatOver)
                         break;
-                    Thread.Sleep(50);
+                    //Thread.Sleep(80); //for watching animated map movement
                     Console.Clear();
 
                     round++;
@@ -291,6 +301,20 @@ namespace Advent
                     foreach (char[] line in grid)
                     {
                         Console.WriteLine(new string(line));
+                    }
+                }
+                if (elfDamage == 3)
+                {
+                    baseRound = round;
+                    if (entities.Exists(x => x.entityType == 'G'))
+                    {
+                        foreach (Entity goblin in entities.Where(x => x.entityType == 'G'))
+                            baseHPSum += goblin.hp;
+                    }
+                    else
+                    {
+                        foreach (Entity elf in entities.Where(x => x.entityType == 'E'))
+                            baseHPSum += elf.hp;
                     }
                 }
                 elfDamage++;
@@ -312,7 +336,7 @@ namespace Advent
                 foreach (Entity elf in entities.Where(x => x.entityType == 'E'))
                     hpSum += elf.hp;
             }
-
+            Console.WriteLine(String.Format("Base Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", baseRound, baseHPSum, baseRound * baseHPSum));
             Console.WriteLine(String.Format("Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", round, hpSum, round * hpSum));
         }
     }

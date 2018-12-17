@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
     class Day16Part2
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input16-2.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             int[] registers = new int[] { 0, 0, 0, 0 };
             for (int index = 0; index < input.Count; index++)
             {

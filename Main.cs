@@ -7,15 +7,9 @@ namespace Advent
     {
         static void Main(string[] args)
         {
-            List<string> input = new List<string>();
-            using (StreamReader reader = new StreamReader("input.txt"))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                    input.Add(line);
-            }
-
-            Day16Part1.Run(input);
+            Day15Dijkstra.Run();
+            Day16Part1.Run();
+            Day16Part2.Run();
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
@@ -29,8 +28,16 @@ namespace Advent
 
     class Day16Part1
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input16-1.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             int total = 0;
             List<List<OperationType>> opcodeCandidates = new List<List<OperationType>>();
             for(OperationType op = OperationType.ADDR; op < OperationType.NUM_TYPES; op++)
