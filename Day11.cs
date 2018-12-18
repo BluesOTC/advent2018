@@ -24,8 +24,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 11");
+            Console.WriteLine("\nDay 11");
 
             int serial = 7689;
             int[][] grid = new int[300][];

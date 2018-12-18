@@ -8,8 +8,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 4");
+            Console.WriteLine("\nDay 4");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input4.txt"))

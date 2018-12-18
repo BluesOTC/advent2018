@@ -10,8 +10,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 14");
+            Console.WriteLine("\nDay 14");
 
             List<int> scoreboard = new List<int> { 3, 7 };
             int elf1 = 0;

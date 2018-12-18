@@ -9,8 +9,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 7");
+            Console.WriteLine("\nDay 7");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input7.txt"))
@@ -33,6 +32,8 @@ namespace Advent
                 else
                     stepTree[subsequent].Add(prereq);
             }
+
+            //TODO: redo part 1 and add print
 
             Dictionary<char, int> elfAssignments = new Dictionary<char, int>();
             List<char> remainingSteps = stepTree.Keys.ToList();
@@ -93,7 +94,7 @@ namespace Advent
                 }
                 if (prereqsComplete)
                 {
-                    Console.Write(step);
+                    //Console.Write(step);
                     remainingSteps.Remove(step);
                     elfAssignments.Add(step, time + step - 4);
                     return true;

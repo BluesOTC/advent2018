@@ -9,8 +9,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 2");
+            Console.WriteLine("\nDay 2");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input2.txt"))
@@ -60,7 +59,7 @@ namespace Advent
                 {
                     foreach(string duplicate in elements)
                         candidates.Remove(duplicate);
-                    Console.WriteLine("Common letters:" + candidates[0].ToString());
+                    Console.WriteLine("Common letters: " + candidates[0].ToString());
                     break;
                 }
             }

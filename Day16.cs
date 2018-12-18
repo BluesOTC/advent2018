@@ -30,8 +30,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 16");
+            Console.WriteLine("\nDay 16");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input16-1.txt"))
@@ -98,7 +97,7 @@ namespace Advent
                 foreach (OperationType op in opcodeCandidates[index])
                     Console.WriteLine(index + ": " + op);
             }*/
-            Console.WriteLine(String.Format("{0} samples can be generated from 3+ opcodes", total));
+            Console.WriteLine(String.Format("3+ opcode samples: {0}", total));
             
             input = new List<string>();
             using (StreamReader reader = new StreamReader("input16-2.txt"))

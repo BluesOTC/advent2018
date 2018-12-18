@@ -9,8 +9,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 6");
+            Console.WriteLine("\nDay 6");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input6.txt"))
@@ -29,30 +28,28 @@ namespace Advent
 
             int minX = coordinates.Min(x => x[0]);
             int minY = coordinates.Min(x => x[1]);
-            int maxY = coordinates.Max(x => x[1]);
-            int[][] grid = new int[coordinates.Max(x => x[0]) - minX + 2][]; //42, 347
-            for (int i = 0; i < grid.Length; i++)
+
+            foreach (int[] coordinate in coordinates)
             {
-                if (i == 0 || i == grid.Length)
-                    grid[i] = Enumerable.Repeat(-2, maxY - minY + 2).ToArray();
-                else
-                {
-                    grid[i] = Enumerable.Repeat(-1, maxY - minY + 2).ToArray();
-                    grid[i][0] = -2;
-                    grid[i][grid[i].Length - 1] = -2;
-                }
+                coordinate[0] -= minX;
+                coordinate[1] -= minY;
             }
 
+            int maxY = coordinates.Max(x => x[1]);
+            int[][] grid = new int[coordinates.Max(x => x[0])][]; //42, 347
+            for (int i = 0; i < grid.Length; i++)
+                grid[i] = new int[maxY];
+
             //Day 6-1
-            for (int row = 1; row < grid.Length; row++)
+            for (int row = 0; row < grid.Length; row++)
             {
-                for (int col = 1; col < grid[row].Length; col++)
+                for (int col = 0; col < grid[row].Length; col++)
                 {
                     int minDistance = Int32.MaxValue;
                     int closestIndex = -1;
                     for (int index = 0; index < coordinates.Count; index++)
                     {
-                        int distance = findManhattanDistance(row + minX - 1, col + minY - 1, coordinates[index][0], coordinates[index][1]);
+                        int distance = findManhattanDistance(row, col, coordinates[index][0], coordinates[index][1]);
                         if (distance < minDistance)
                         {
                             minDistance = distance;
@@ -61,59 +58,44 @@ namespace Advent
                         else if (distance == minDistance)
                             closestIndex = -1;
                     }
-                    grid[row][col] = closestIndex;
+                    grid[row][col] = closestIndex + 1;
                 }
             }
 
             HashSet<int> infinites = new HashSet<int>();
-            for (int col = 1; col < grid[0].Length; col++)
+            for (int col = 0; col < grid[0].Length; col++)
             {
-                infinites.Add(grid[1][col]);
-                infinites.Add(grid[grid.Length - 2][col]);
+                infinites.Add(grid[0][col]);
+                infinites.Add(grid[grid.Length - 1][col]);
+            }
+            for (int row = 0; row < grid.Length; row++)
+            {
+                infinites.Add(grid[row][0]);
+                infinites.Add(grid[row][grid[0].Length - 1]);
             }
 
-            for (int row = 1; row < grid.Length; row++)
-            {
-                infinites.Add(grid[row][1]);
-                infinites.Add(grid[row][grid[0].Length - 2]);
-            }
+            for (int r = 0; r < grid.Length; r++)
+                grid[r] = grid[r].Select(x => infinites.Contains(x) ? 0 : x).ToArray();
 
-            for (int r = 1; r < grid.Length; r++)
-            {
-                for (int c = 1; c < grid[r].Length; c++)
-                {
-                    if (infinites.Contains(grid[r][c]))
-                        grid[r][c] = -2;
-                }
-            }
-
-            List<int> areas = Enumerable.Repeat(0, coordinates.Count).ToList();
+            List<int> areas = Enumerable.Repeat(0, coordinates.Count + 1).ToList();
             foreach (int[] row in grid)
             {
                 foreach (int point in row)
                 {
-                    if (point >= 0)
+                    if (point > 0)
                         areas[point]++;
-                    //Console.Write(point);
-                    /*if (point >= 0 && point < 10)
-                        Console.Write(" ");
-                    Console.Write(",");*/
                 }
-                //Console.Write("\n");
             }
 
             Console.WriteLine("Max Area: " + areas.Max());
 
             //Day 6-2
             int area = 0;
-            for (int r = 1; r < grid.Length - 1; r++)
+            for (int r = 0; r < grid.Length; r++)
             {
-                for (int c = 1; c < grid[r].Length - 1; c++)
+                for (int c = 0; c < grid[r].Length; c++)
                 {
-                    int sum = 0;
-                    for (int index = 0; index < coordinates.Count; index++)
-                        sum += findManhattanDistance(r + minX - 1, c + minY - 1, coordinates[index][0], coordinates[index][1]);
-                    if (sum < 10000)
+                    if (coordinates.Sum(x => findManhattanDistance(r, c, x[0], x[1])) < 10000)
                         area++;
                 }
             }

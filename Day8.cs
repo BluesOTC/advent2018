@@ -8,8 +8,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 8");
+            Console.WriteLine("\nDay 8");
 
             int[] splitLine;
             using (StreamReader reader = new StreamReader("input8.txt"))
@@ -43,7 +42,7 @@ namespace Advent
             else
             {
                 index += metadataEntries;
-                return input.Skip(index).Take(metadataEntries).Sum();
+                return input.Skip(index - metadataEntries).Take(metadataEntries).Sum();
             }
         }
 
@@ -56,7 +55,7 @@ namespace Advent
             for (int i = 0; i < children; i++)
                 sum += processChildPart1(input, ref index);
             index += metadataEntries;
-            return sum + input.Skip(index).Take(metadataEntries).Sum();
+            return sum + input.Skip(index - metadataEntries).Take(metadataEntries).Sum();
         }
     }
 }

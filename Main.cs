@@ -8,9 +8,6 @@ namespace Advent
         {
             DateTime start = DateTime.Now;
             DateTime last = start;
-            Day15Dijkstra.Run(false, 500);
-            Console.WriteLine("Run Time: " + (DateTime.Now - last));
-            last = DateTime.Now;
             Day1.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;
@@ -53,11 +50,16 @@ namespace Advent
             Day14.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;
+            Day15Dijkstra.Run(false, 500);
+            Console.WriteLine("Run Time: " + (DateTime.Now - last));
+            last = DateTime.Now;
             Day16.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;
+            Day17.Run();
+            Console.WriteLine("Run Time: " + (DateTime.Now - last));
+            last = DateTime.Now;
             Console.WriteLine("\nTotal Run Time: " + (DateTime.Now - start));
-            //Day17.Run();
         }
     }
 }

@@ -135,8 +135,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 13");
+            Console.WriteLine("\nDay 13");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input13.txt"))
@@ -199,14 +198,14 @@ namespace Advent
                         grid[c.y][c.x] = origGrid[c.y][c.x];
                         if (firstCrash)
                         {
-                            Console.WriteLine("First Crash! " + c.x + "," + c.y);
+                            Console.WriteLine("First Crash: " + c.x + "," + c.y);
                             firstCrash = false;
                         }
                     }
                 }
                 carts = next;
             }
-            Console.WriteLine("One cart left! " + carts[0].x + "," + carts[0].y);
+            Console.WriteLine("One cart left: " + carts[0].x + "," + carts[0].y);
         }
     }
 }

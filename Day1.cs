@@ -8,7 +8,6 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
             Console.WriteLine("Day 1");
 
             List<string> input = new List<string>();

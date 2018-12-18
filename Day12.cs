@@ -9,8 +9,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 12");
+            Console.WriteLine("\nDay 12");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input12.txt"))
@@ -99,7 +98,7 @@ namespace Advent
             }
             //Console.WriteLine("Repeat Generation Sum Product: " + total + " from " + plants + " plants");
             long finalTotal = total + (long)plantShift * (50000000000L - (long)generation) * (long)plants;
-            Console.WriteLine("Generation 50b: Sum Product: " + finalTotal + " from " + plants + " plants");
+            Console.WriteLine("Generation 50 billion Sum Product: " + finalTotal + " from " + plants + " plants");
         }
     }
 }

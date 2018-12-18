@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 
 namespace Advent
 {
@@ -8,8 +10,7 @@ namespace Advent
     {
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine("Day 17");
+            Console.WriteLine("\nDay 17");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input17.txt"))
@@ -20,77 +21,120 @@ namespace Advent
             }
 
             List<char[]> grid = new List<char[]>();
-            for(int y = 0; y < 1896; y++)
-            {
-                grid.Add(new string('.', 200).ToCharArray());
-            }
-            grid[0][45] = '+';
 
-            foreach(string line in input) //X range from 466-653, Y range from 6-1895, spring at 500,0
+            int minY = Int32.MaxValue;
+            foreach (string line in input) //X range from 466-653, Y range from 6-1895, spring at 500,0
             {
                 string[] coordinates = line.Split(new char[] { '=', '.', ',' });
                 char coord1 = coordinates[0][0];
                 char coord2 = coordinates[2][0];
-                if(coord1 == 'x')
+                if (coord1 == 'x')
                 {
                     int x = Int32.Parse(coordinates[1]);
                     int ystart = Int32.Parse(coordinates[3]);
+                    if (minY > ystart)
+                        minY = ystart;
                     int yend = Int32.Parse(coordinates[5]);
-                    for(;ystart < yend; ystart++)
+                    while (grid.Count <= yend)
+                        grid.Add(Enumerable.Repeat('.', 1000).ToArray());
+                    for (; ystart <= yend; ystart++)
                     {
-                        grid[ystart][x-455] = '#';
+                        grid[ystart][x] = '#';
                     }
                 }
                 else
                 {
                     int y = Int32.Parse(coordinates[1]);
+                    while (grid.Count <= y)
+                        grid.Add(Enumerable.Repeat('.', 1000).ToArray());
+                    if (minY > y)
+                        minY = y;
                     int xstart = Int32.Parse(coordinates[3]);
                     int xend = Int32.Parse(coordinates[5]);
-                    for (; xstart < xend; xstart++)
+                    for (; xstart <= xend; xstart++)
                     {
-                        grid[y][xstart-455] = '#';
+                        grid[y][xstart] = '#';
                     }
                 }
             }
+            grid[0][500] = '+';
+            fillDown(500, 1, ref grid);
 
+            int tiles = 0;
+            int lakeTiles = 0;
             foreach (char[] line in grid)
-                Console.WriteLine(new string(line));
-
-            //flow down until clay floor is reached
-            //check for walls on both sides
-            //if not enclosed, switch to |
-            //can only layer on ~ or #
+            {
+                //Console.WriteLine(new string(line).Substring(465, 198));
+                lakeTiles += line.Where(x => x == '~').Count();
+                tiles += line.Where(x => x == '|').Count();
+            }
+            Console.WriteLine("Tiles touched by water: " + (tiles - minY + 1 + lakeTiles));
+            Console.WriteLine("Lake tiles: " + lakeTiles);
         }
 
-        /*int fillDown(int x, int y, ref List<char[]> grid)
+        static void fillDown(int x, int y, ref List<char[]> grid)
         {
-            if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
-                return fillLeft(x - 1, y - 1, ref grid) + fillRight(x + 1, y - 1, ref grid);
-            return 1 + fillDown(x, y + 1, ref grid);
+            int distance = 0;
+            while (true)
+            {
+                grid[y + distance][x] = '|';
+                if (y + distance + 1 == grid.Count || grid[y + distance + 1][x] == '|')
+                    return;
+                if (grid[y + distance + 1][x] == '#' || grid[y + distance + 1][x] == '~')
+                {
+                    fillHorizontally(x, y + distance, ref grid);
+                    return;
+                }
+                distance++;
+            }
         }
 
-        int fillLeft(int x, int y, ref List<char[]> grid) //check if at boundary or if there is no floor
+        static void fillHorizontally(int x, int y, ref List<char[]> grid)
         {
-            if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
-                return 0;
-            return 1 + fillLeft(x - 1, y, ref grid);
+            int leftDistance = 0;
+            bool leftWall = false;
+            while (true)
+            {
+                if (grid[y][x - leftDistance] != '~')
+                    grid[y][x - leftDistance] = '|';
+                if (grid[y + 1][x - leftDistance] == '.' || grid[y + 1][x - leftDistance] == '|')
+                {
+                    fillDown(x - leftDistance, y, ref grid);
+                    break;
+                }
+                if (grid[y][x - leftDistance - 1] == '#')
+                {
+                    leftWall = true;
+                    break;
+                }
+                leftDistance++;
+            }
+
+            int rightDistance = 0;
+            bool rightWall = false;
+            while (true)
+            {
+                if (grid[y][x + rightDistance] != '~')
+                    grid[y][x + rightDistance] = '|';
+                if (grid[y + 1][x + rightDistance] == '.' || grid[y + 1][x + rightDistance] == '|')
+                {
+                    fillDown(x + rightDistance, y, ref grid);
+                    break;
+                }
+                if (grid[y][x + rightDistance + 1] == '#')
+                {
+                    rightWall = true;
+                    break;
+                }
+                rightDistance++;
+            }
+
+            if (rightWall && leftWall)
+            {
+                for (int index = x - leftDistance; index <= x + rightDistance; index++)
+                    grid[y][index] = '~';
+                fillHorizontally(x, y - 1, ref grid);
+            }
         }
-
-        int fillRight(int x, int y, ref List<char[]> grid)
-        {
-            if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
-                return 0;
-            return 1 + fillRight(x + 1, y, ref grid);
-        }*/
-
-        /*int searchDown(int x, int y, ref List<char[]> grid)
-        {
-            int 
-        }
-
-        int searchHorizontally(int x, int y, ref List<char[]> grid)
-        {
-
-        }*/
     }
 }

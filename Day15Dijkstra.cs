@@ -196,8 +196,10 @@ namespace Advent
     {
         public static void Run(bool debug, int sleepTime)
         {
-            Console.WriteLine("Day 15");
-            Console.Clear();
+            if (debug)
+                Console.Clear();
+            else
+                Console.WriteLine("\nDay 15");
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input15.txt"))
@@ -290,8 +292,8 @@ namespace Advent
                     baseHPSum = entities.Where(x => x.hp > 0).Sum(x => x.hp);
                 }
                 elfDamage++;
-                if (!elfDead)
-                    Console.WriteLine("All elves survive when they deal " + elfDamage + " damage");
+                //if (!elfDead)
+                //    Console.WriteLine("All elves survive when they deal " + elfDamage + " damage");
                 combatOver = false;
             }
             Console.WriteLine(String.Format("Base Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", baseRound, baseHPSum, baseRound * baseHPSum));
