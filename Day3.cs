@@ -24,21 +24,18 @@ namespace Advent
             foreach (string line in input)
             {
                 string[] splitLine = line.Split(new char[] { ' ', ',', '@', ':', 'x' });
-                int x = Int32.Parse(splitLine[3]);
-                int y = Int32.Parse(splitLine[4]);
+                int x1 = Int32.Parse(splitLine[3]);
+                int y1 = Int32.Parse(splitLine[4]);
+                int x2 = x1 + Int32.Parse(splitLine[6]);
+                int y2 = y1 + Int32.Parse(splitLine[7]);
 
-                for (int w = 0; w < Int32.Parse(splitLine[6]); w++)
+                for (int x = x1; x < x2; x++)
                 {
-                    for (int h = 0; h < Int32.Parse(splitLine[7]); h++)
+                    for (int y = y1; y < y2; y++)
                     {
-                        Coordinate curr = new Coordinate(x + w, y + h);
-                        if (claims.Contains(curr))
-                        {
-                            if (!conflicts.Contains(curr))
-                                conflicts.Add(curr);
-                        }
-                        else
-                            claims.Add(curr);
+                        Coordinate curr = new Coordinate(x, y);
+                        if (!claims.Add(curr))
+                            conflicts.Add(curr);
                     }
                 }
             }
@@ -49,15 +46,20 @@ namespace Advent
             {
                 string[] splitLine = line.Split(new char[] { ' ', ',', '@', ':', 'x' });
                 if (!hasAnyConflicts(Int32.Parse(splitLine[3]), Int32.Parse(splitLine[4]), Int32.Parse(splitLine[6]), Int32.Parse(splitLine[7]), conflicts))
+                {
                     Console.Write("Notable Claim: " + splitLine[0] + "\n");
+                    break;
+                }
             }
         }
 
         static bool hasAnyConflicts(int x, int y, int w, int h, HashSet<Coordinate> conflicts)
         {
-            for (int i = x; i < x + w; i++)
-                for (int j = y; j < y + h; j++)
-                    if (conflicts.Contains(new Coordinate(i, j)))
+            int x2 = x + w;
+            int y2 = y + h;
+            for (int x1 = x; x1 < x2; x1++)
+                for (int y1 = y; y1 < y2; y1++)
+                    if (conflicts.Contains(new Coordinate(x1, y1)))
                         return true;
             return false;
         }

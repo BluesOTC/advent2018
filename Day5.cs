@@ -34,9 +34,7 @@ namespace Advent
             int minLength = input.Length;
             foreach (char candidate in unitTypes)
             {
-                polymer = new StringBuilder(input);
-                polymer.Replace(candidate.ToString(), "");
-                polymer.Replace((candidate + 32).ToString(), "");
+                polymer = new StringBuilder(input).Replace(candidate.ToString(), "").Replace((candidate + 32).ToString(), "");
                 for (int index = 0; index < polymer.Length - 2; index++)
                 {
                     if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)

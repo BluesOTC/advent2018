@@ -20,27 +20,17 @@ namespace Advent
                     input.Add(line);
             }
 
-            int minX, minY, maxX, maxY;
-            minX = minY = Int32.MaxValue;
-            maxX = maxY = -1;
             List<int[]> coordinates = new List<int[]>();
             foreach (string line in input)
             {
                 string[] split = line.Split(',');
-                int x = Int32.Parse(split[0]);
-                int y = Int32.Parse(split[1].TrimStart(' '));
-                if (x > maxX)
-                    maxX = x;
-                else if (x < minX)
-                    minX = x;
-                if (y > maxY)
-                    maxY = y;
-                else if (y < minY)
-                    minY = y;
-                coordinates.Add(new int[] { x, y });
+                coordinates.Add(new int[] { Int32.Parse(split[0]), Int32.Parse(split[1].TrimStart(' ')) });
             }
 
-            int[][] grid = new int[maxX - minX + 2][]; //42, 347
+            int minX = coordinates.Min(x => x[0]);
+            int minY = coordinates.Min(x => x[1]);
+            int maxY = coordinates.Max(x => x[1]);
+            int[][] grid = new int[coordinates.Max(x => x[0]) - minX + 2][]; //42, 347
             for (int i = 0; i < grid.Length; i++)
             {
                 if (i == 0 || i == grid.Length)
@@ -78,18 +68,14 @@ namespace Advent
             HashSet<int> infinites = new HashSet<int>();
             for (int col = 1; col < grid[0].Length; col++)
             {
-                if (!infinites.Contains(grid[1][col]))
-                    infinites.Add(grid[1][col]);
-                if (!infinites.Contains(grid[grid.Length - 2][col]))
-                    infinites.Add(grid[grid.Length - 2][col]);
+                infinites.Add(grid[1][col]);
+                infinites.Add(grid[grid.Length - 2][col]);
             }
 
             for (int row = 1; row < grid.Length; row++)
             {
-                if (!infinites.Contains(grid[row][1]))
-                    infinites.Add(grid[row][1]);
-                if (!infinites.Contains(grid[row][grid[0].Length - 2]))
-                    infinites.Add(grid[row][grid[0].Length - 2]);
+                infinites.Add(grid[row][1]);
+                infinites.Add(grid[row][grid[0].Length - 2]);
             }
 
             for (int r = 1; r < grid.Length; r++)
@@ -116,12 +102,7 @@ namespace Advent
                 //Console.Write("\n");
             }
 
-            int maxArea = -1;
-            foreach(int currArea in areas)
-                if (currArea > maxArea)
-                    maxArea = currArea;
-
-            Console.WriteLine("Max Area: " + maxArea);
+            Console.WriteLine("Max Area: " + areas.Max());
 
             //Day 6-2
             int area = 0;
