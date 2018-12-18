@@ -98,7 +98,7 @@ namespace Advent
             }
             //Console.WriteLine("Repeat Generation Sum Product: " + total + " from " + plants + " plants");
             long finalTotal = total + (long)plantShift * (50000000000L - (long)generation) * (long)plants;
-            Console.WriteLine("Generation 50 billion Sum Product: " + finalTotal + " from " + plants + " plants");
+            Console.WriteLine("Generation 50000000000 Sum Product: " + finalTotal + " from " + plants + " plants");
         }
     }
 }

@@ -95,7 +95,14 @@ namespace Advent
             {
                 for (int c = 0; c < grid[r].Length; c++)
                 {
-                    if (coordinates.Sum(x => findManhattanDistance(r, c, x[0], x[1])) < 10000)
+                    int sum = 0;
+                    foreach(int[] coordinate in coordinates)
+                    {
+                        sum += findManhattanDistance(r, c, coordinate[0], coordinate[1]);
+                        if (sum >= 10000)
+                            break;
+                    }
+                    if (sum < 10000)
                         area++;
                 }
             }
