@@ -15,9 +15,7 @@ namespace Advent
 
             string input;
             using (StreamReader reader = new StreamReader("input5.txt"))
-            {
                 input = reader.ReadLine();
-            }
 
             //Part 1
             StringBuilder polymer = new StringBuilder(input);
@@ -26,45 +24,30 @@ namespace Advent
                 if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
                 {
                     polymer.Remove(index, 2);
-                    index--;
-                    if (index > 0)
-                        index--;
+                    index -= index > 1 ? 2 : 1;
                 }
             }
             Console.WriteLine("Polymer Length: " + polymer.Length);
 
             //Part 2
-            char[] unitTypes = input.ToUpper().ToCharArray().Distinct().ToArray();
+            IEnumerable<char> unitTypes = input.ToUpper().ToCharArray().Distinct();
             int minLength = input.Length;
-            char bestChar = '\0';
             foreach (char candidate in unitTypes)
             {
                 polymer = new StringBuilder(input);
+                polymer.Replace(candidate.ToString(), "");
+                polymer.Replace((candidate + 32).ToString(), "");
                 for (int index = 0; index < polymer.Length - 2; index++)
                 {
-                    if (polymer[index] == candidate || polymer[index] == candidate + 32)
-                    {
-                        polymer.Remove(index, 1);
-                        if (index > 0)
-                            index--;
-                        if (index == polymer.Length)
-                            break;
-                    }
                     if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
                     {
                         polymer.Remove(index, 2);
-                        index--;
-                        if (index > 0)
-                            index--;
+                        index -= index > 1 ? 2 : 1;
                     }
                 }
-                if (polymer.Length < minLength)
-                {
-                    minLength = polymer.Length;
-                    bestChar = candidate;
-                }
+                minLength = Math.Min(minLength, polymer.Length);
             }
-            Console.WriteLine("Unit removed: " + bestChar + ", Polymer Length: " + minLength);
+            Console.WriteLine("Min Polymer Length: " + minLength);
         }
     }
 }

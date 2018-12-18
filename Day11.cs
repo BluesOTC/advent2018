@@ -30,7 +30,7 @@ namespace Advent
             int serial = 7689;
             int[][] grid = new int[300][];
             for (int i = 0; i < 300; i++)
-                grid[i] = Enumerable.Repeat(0, 300).ToArray();
+                grid[i] = new int[300];
             for (int i = 1; i < 301; i++)
             {
                 for (int j = 1; j < 301; j++)

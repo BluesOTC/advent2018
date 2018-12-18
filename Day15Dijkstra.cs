@@ -194,9 +194,10 @@ namespace Advent
 
     class Day15Dijkstra
     {
-        public static void Run()
+        public static void Run(bool debug, int sleepTime)
         {
             Console.WriteLine("Day 15");
+            Console.Clear();
 
             List<string> input = new List<string>();
             using (StreamReader reader = new StreamReader("input15.txt"))
@@ -225,9 +226,9 @@ namespace Advent
                     for (int x = 0; x < input[y].Length; x++)
                     {
                         if (grid[y][x] == 'G')
-                            entities.Add(new Entity(x, y, grid[y][x], 3, ref grid));
+                            entities.Add(new Entity(x, y, 'G', 3, ref grid));
                         else if (grid[y][x] == 'E')
-                            entities.Add(new Entity(x, y, grid[y][x], elfDamage, ref grid));
+                            entities.Add(new Entity(x, y, 'E', elfDamage, ref grid));
                     }
                 }
                 elfDead = false;
@@ -240,7 +241,7 @@ namespace Advent
                     {
                         if (!entities.Contains(e))
                             continue;
-                        List<Entity> filteredEntities = e.entityType == 'G' ? entities.Where(x => x.entityType == 'E').ToList() : entities.Where(x => x.entityType == 'G').ToList();
+                        List<Entity> filteredEntities = entities.Where(x => x.entityType != e.entityType).ToList();
                         if (filteredEntities.Count == 0)
                         {
                             combatOver = true;
@@ -264,53 +265,38 @@ namespace Advent
                     }
                     if (combatOver)
                         break;
-                    /*Thread.Sleep(80); //for watching animated map movement
-                    Console.Clear();*/
 
                     round++;
-                    /*Console.WriteLine("R" + round);
-                    foreach (char[] line in grid)
+                    if (debug)
                     {
-                        Console.WriteLine(new string(line));
-                    }*/
+                        Console.WriteLine("R" + round);
+                        for (int y = 0; y < grid.Count; y++)
+                        {
+                            Console.Write(new string(grid[y]) + " ");
+                            foreach (Entity e in entities)
+                            {
+                                if (e.y == y)
+                                    Console.Write(String.Format("{0}({1}), ", e.entityType, e.hp));
+                            }
+                            Console.WriteLine();
+                        }
+                        Thread.Sleep(sleepTime); //for watching animated map movement
+                        Console.Clear();
+                    }
                 }
                 if (elfDamage == 3)
                 {
                     baseRound = round;
-                    if (entities.Exists(x => x.entityType == 'G'))
-                    {
-                        foreach (Entity goblin in entities.Where(x => x.entityType == 'G'))
-                            baseHPSum += goblin.hp;
-                    }
-                    else
-                    {
-                        foreach (Entity elf in entities.Where(x => x.entityType == 'E'))
-                            baseHPSum += elf.hp;
-                    }
+                    baseHPSum = entities.Where(x => x.hp > 0).Sum(x => x.hp);
                 }
                 elfDamage++;
-                if (elfDead)
-                {
-                    //Console.WriteLine("Elf died in round " + round + ", upping damage to " + elfDamage);
-                }
-                else
+                if (!elfDead)
                     Console.WriteLine("All elves survive when they deal " + elfDamage + " damage");
                 combatOver = false;
             }
-
-            int hpSum = 0;
-            if (entities.Exists(x => x.entityType == 'G'))
-            {
-                foreach (Entity goblin in entities.Where(x => x.entityType == 'G'))
-                    hpSum += goblin.hp;
-            }
-            else
-            {
-                foreach (Entity elf in entities.Where(x => x.entityType == 'E'))
-                    hpSum += elf.hp;
-            }
             Console.WriteLine(String.Format("Base Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", baseRound, baseHPSum, baseRound * baseHPSum));
-            Console.WriteLine(String.Format("Elf Survival Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", round, hpSum, round * hpSum));
+            int hpSum;
+            Console.WriteLine(String.Format("Elf Survival Case: Rounds: {0}, Total HP Remaining: {1}, Outcome: {2}", round, hpSum = entities.Where(x => x.hp > 0).Sum(x => x.hp), round * hpSum));
         }
     }
 }

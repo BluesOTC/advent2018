@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent
 {
     class Day17
     {
-        public static void Run(List<string> input)
+        public static void Run()
         {
+            Console.WriteLine();
+            Console.WriteLine("Day 17");
+
+            List<string> input = new List<string>();
+            using (StreamReader reader = new StreamReader("input17.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    input.Add(line);
+            }
+
             List<char[]> grid = new List<char[]>();
             for(int y = 0; y < 1896; y++)
             {
@@ -53,13 +62,35 @@ namespace Advent
             //can only layer on ~ or #
         }
 
-        int floodFill(int x, int y, ref List<char[]> grid)
+        /*int fillDown(int x, int y, ref List<char[]> grid)
         {
-            if (x < 0 || y < 0 || x >= grid[y].Length || y >= grid.Count)
-                return 0;
+            if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
+                return fillLeft(x - 1, y - 1, ref grid) + fillRight(x + 1, y - 1, ref grid);
+            return 1 + fillDown(x, y + 1, ref grid);
+        }
+
+        int fillLeft(int x, int y, ref List<char[]> grid) //check if at boundary or if there is no floor
+        {
             if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
                 return 0;
-            return 1 + floodFill(x + 1, y, ref grid) + floodFill(x - 1, y, ref grid) + floodFill(x, y + 1, ref grid); //only go left/right if ~/# are under... return...?
+            return 1 + fillLeft(x - 1, y, ref grid);
         }
+
+        int fillRight(int x, int y, ref List<char[]> grid)
+        {
+            if (grid[y][x] == '#' || grid[y][x] == '~' || grid[y][x] == '|')
+                return 0;
+            return 1 + fillRight(x + 1, y, ref grid);
+        }*/
+
+        /*int searchDown(int x, int y, ref List<char[]> grid)
+        {
+            int 
+        }
+
+        int searchHorizontally(int x, int y, ref List<char[]> grid)
+        {
+
+        }*/
     }
 }

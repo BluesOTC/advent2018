@@ -21,30 +21,25 @@ namespace Advent
             int[] input = new int[] { 6, 3, 3, 6, 0, 1 };
 
             bool part1Printed = false;
-            while(index < input.Length)
+            while (index < input.Length)
             {
                 int sum = scoreboard[elf1] + scoreboard[elf2];
+                recipes++;
                 if (sum > 9)
                 {
-                    recipes++;
                     scoreboard.Add(1);
                     index = input[index] == 1 ? index + 1 : 0;
                     if (index >= input.Length)
                         break;
                     recipes++;
-                    index = input[index] == sum % 10 ? index + 1 : input[0] == sum % 10 ? 1 : 0;
-                    scoreboard.Add(sum % 10);
+                    sum %= 10;
                 }
-                else
-                {
-                    recipes++;
-                    scoreboard.Add(sum);
-                    index = input[index] == sum ? index + 1 : 0;
-                }
+                index = input[index] == sum ? index + 1 : input[0] == sum ? 1 : 0;
+                scoreboard.Add(sum);
                 elf1 = (elf1 + scoreboard[elf1] + 1) % scoreboard.Count;
                 elf2 = (elf2 + scoreboard[elf2] + 1) % scoreboard.Count;
 
-                if (scoreboard.Count >= 633611 && !part1Printed)
+                if (!part1Printed && scoreboard.Count >= 633611)
                 {
                     Console.Write("Next recipes after 633601: ");
                     foreach (int i in scoreboard.GetRange(633601, 10))
