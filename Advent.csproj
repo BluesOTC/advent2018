@@ -54,6 +54,7 @@
     <Compile Include="Day15Dijkstra.cs" />
     <Compile Include="Day16.cs" />
     <Compile Include="Day17.cs" />
+    <Compile Include="Day18.cs" />
     <Compile Include="Day2.cs" />
     <Compile Include="Day3.cs" />
     <Compile Include="Day4.cs" />
@@ -70,6 +71,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)../.."</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

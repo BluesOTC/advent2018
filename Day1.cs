@@ -14,7 +14,7 @@ namespace Advent
             List<int> addends = new List<int>();
             HashSet<int> values = new HashSet<int>();
 
-            using (StreamReader reader = new StreamReader("input1.txt"))
+            using (StreamReader reader = new StreamReader("input/input1.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

@@ -14,7 +14,7 @@ namespace Advent
             int count3 = 0;
 
             List<string> input = new List<string>();
-            using (StreamReader reader = new StreamReader("input2.txt"))
+            using (StreamReader reader = new StreamReader("input/input2.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

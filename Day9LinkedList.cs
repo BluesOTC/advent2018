@@ -12,7 +12,7 @@ namespace Advent
             Console.WriteLine("\nDay 9");
 
             string[] splitLine; 
-            using (StreamReader reader = new StreamReader("input9.txt"))
+            using (StreamReader reader = new StreamReader("input/input9.txt"))
                 splitLine = reader.ReadLine().Split(' ');
             int players = Int32.Parse(splitLine[0]);
             int lastMarble = Int32.Parse(splitLine[6]);

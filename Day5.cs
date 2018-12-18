@@ -13,7 +13,7 @@ namespace Advent
             Console.WriteLine("\nDay 5");
 
             StringBuilder polymer;
-            using (StreamReader reader = new StreamReader("input5.txt"))
+            using (StreamReader reader = new StreamReader("input/input5.txt"))
                 polymer = new StringBuilder(reader.ReadLine());
 
             //Part 1

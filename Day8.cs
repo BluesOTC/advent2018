@@ -11,7 +11,7 @@ namespace Advent
             Console.WriteLine("\nDay 8");
 
             int[] splitLine;
-            using (StreamReader reader = new StreamReader("input8.txt"))
+            using (StreamReader reader = new StreamReader("input/input8.txt"))
                 splitLine = reader.ReadLine().Split(' ').Select(x => Int32.Parse(x)).ToArray();
 
             int index = 0;

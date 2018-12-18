@@ -12,7 +12,7 @@ namespace Advent
             Console.WriteLine("\nDay 7");
 
             List<string> input = new List<string>();
-            using (StreamReader reader = new StreamReader("input7.txt"))
+            using (StreamReader reader = new StreamReader("input/input7.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

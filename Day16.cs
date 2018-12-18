@@ -33,7 +33,7 @@ namespace Advent
             Console.WriteLine("\nDay 16");
 
             List<string> input = new List<string>();
-            using (StreamReader reader = new StreamReader("input16-1.txt"))
+            using (StreamReader reader = new StreamReader("input/input16-1.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -100,7 +100,7 @@ namespace Advent
             Console.WriteLine(String.Format("3+ opcode samples: {0}", total));
             
             input = new List<string>();
-            using (StreamReader reader = new StreamReader("input16-2.txt"))
+            using (StreamReader reader = new StreamReader("input/input16-2.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
