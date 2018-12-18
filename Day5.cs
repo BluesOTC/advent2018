@@ -12,12 +12,11 @@ namespace Advent
         {
             Console.WriteLine("\nDay 5");
 
-            string input;
+            StringBuilder polymer;
             using (StreamReader reader = new StreamReader("input5.txt"))
-                input = reader.ReadLine();
+                polymer = new StringBuilder(reader.ReadLine());
 
             //Part 1
-            StringBuilder polymer = new StringBuilder(input);
             for (int index = 0; index < polymer.Length - 2; index++)
             {
                 if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
@@ -29,11 +28,13 @@ namespace Advent
             Console.WriteLine("Polymer Length: " + polymer.Length);
 
             //Part 2
-            IEnumerable<char> unitTypes = input.ToUpper().ToCharArray().Distinct();
-            int minLength = input.Length;
-            foreach (char candidate in unitTypes)
+            int minLength = polymer.Length;
+            char[] copy = new char[polymer.Length];
+            polymer.CopyTo(0, copy, 0, polymer.Length);
+            string polymerCopy = new string(copy);
+            for (char candidate = 'A'; candidate <= 'Z'; candidate++)
             {
-                polymer = new StringBuilder(input).Replace(candidate.ToString(), "").Replace((candidate + 32).ToString(), "");
+                polymer = new StringBuilder(polymerCopy).Replace(candidate + "", null).Replace((candidate + "").ToLower(), null);
                 for (int index = 0; index < polymer.Length - 2; index++)
                 {
                     if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
@@ -42,6 +43,7 @@ namespace Advent
                         index -= index > 1 ? 2 : 1;
                     }
                 }
+                //Console.WriteLine(polymer.ToString());
                 minLength = Math.Min(minLength, polymer.Length);
             }
             Console.WriteLine("Min Polymer Length: " + minLength);
