@@ -25,7 +25,7 @@ namespace Advent
 
         public override int GetHashCode()
         {
-            return 10000 * x + y;
+            return 1000 * x + y;
         }
 
         public void Add(Coordinate other)

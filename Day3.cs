@@ -18,12 +18,12 @@ namespace Advent
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] splitLine = line.Split(new char[] { ' ', ',', '@', ':', 'x' });
+                    string[] splitLine = line.Split(new char[] { '#', ' ', ',', '@', ':', 'x' });
                     input.Add(splitLine);
-                    int x1 = Int32.Parse(splitLine[3]);
-                    int y1 = Int32.Parse(splitLine[4]);
-                    int x2 = x1 + Int32.Parse(splitLine[6]);
-                    int y2 = y1 + Int32.Parse(splitLine[7]);
+                    int x1 = Int32.Parse(splitLine[4]);
+                    int y1 = Int32.Parse(splitLine[5]);
+                    int x2 = x1 + Int32.Parse(splitLine[7]);
+                    int y2 = y1 + Int32.Parse(splitLine[8]);
 
                     for (int x = x1; x < x2; x++)
                     {
@@ -41,9 +41,9 @@ namespace Advent
             //Day 3-2
             foreach (string[] splitLine in input)
             {
-                if (!hasAnyConflicts(Int32.Parse(splitLine[3]), Int32.Parse(splitLine[4]), Int32.Parse(splitLine[6]), Int32.Parse(splitLine[7]), conflicts))
+                if (!hasAnyConflicts(Int32.Parse(splitLine[4]), Int32.Parse(splitLine[5]), Int32.Parse(splitLine[7]), Int32.Parse(splitLine[8]), conflicts))
                 {
-                    Console.Write("Notable Claim: " + splitLine[0] + "\n");
+                    Console.Write("Notable Claim: " + splitLine[1] + "\n");
                     break;
                 }
             }
@@ -61,6 +61,7 @@ namespace Advent
         }
     }
 }
+
 /*using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,20 +76,22 @@ namespace Advent
             Console.WriteLine("\nDay 3");
 
 
-            Dictionary<Coordinate, string> claims = new Dictionary<Coordinate, string>();
+            Dictionary<Coordinate, int> claims = new Dictionary<Coordinate, int>();
             HashSet<Coordinate> conflicts = new HashSet<Coordinate>();
-            HashSet<string> conflictedClaims = new HashSet<string>();
+            HashSet<int> conflictedClaims = new HashSet<int>();
 
+            int index = 0;
             using (StreamReader reader = new StreamReader("input/input3.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] splitLine = line.Split(new char[] { ' ', ',', '@', ':', 'x' });
-                    int x1 = Int32.Parse(splitLine[3]);
-                    int y1 = Int32.Parse(splitLine[4]);
-                    int x2 = x1 + Int32.Parse(splitLine[6]);
-                    int y2 = y1 + Int32.Parse(splitLine[7]);
+                    index++;
+                    string[] splitLine = line.Split(new char[] { '#', ' ', ',', '@', ':', 'x' });
+                    int x1 = Int32.Parse(splitLine[4]);
+                    int y1 = Int32.Parse(splitLine[5]);
+                    int x2 = x1 + Int32.Parse(splitLine[7]);
+                    int y2 = y1 + Int32.Parse(splitLine[8]);
 
                     for (int x = x1; x < x2; x++)
                     {
@@ -99,15 +102,14 @@ namespace Advent
                             {
                                 if (conflicts.Add(curr))
                                     conflictedClaims.Add(claims[curr]);
-                                conflictedClaims.Add(splitLine[0]);
+                                conflictedClaims.Add(index);
                             }
                             else
-                                claims.Add(curr, splitLine[0]);
+                                claims.Add(curr, index);
                         }
                     }
                 }
             }
-
             Console.WriteLine("Conflicts: " + conflicts.Count);
             Console.WriteLine("Notable Claim: " + claims.Values.Except(conflictedClaims).First());
         }
