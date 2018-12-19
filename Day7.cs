@@ -37,7 +37,7 @@ namespace Advent
                 currSteps.Sort();
                 completedSteps.AddRange(currSteps);
             }
-            Console.Write("Step order " + new string(completedSteps.ToArray()));
+            Console.Write("Step order: " + new string(completedSteps.ToArray()));
 
             Dictionary<char, int> elfAssignments = new Dictionary<char, int>();
             List<char> remainingSteps = stepTree.Keys.ToList();
