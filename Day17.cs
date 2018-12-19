@@ -97,6 +97,11 @@ namespace Advent
             {
                 if (grid[y][x - leftDistance] != '~')
                     grid[y][x - leftDistance] = '|';
+                else
+                {
+                    leftWall = true;
+                    break;
+                }
                 if (grid[y + 1][x - leftDistance] == '.' || grid[y + 1][x - leftDistance] == '|')
                 {
                     fillDown(x - leftDistance, y, ref grid);
@@ -116,6 +121,11 @@ namespace Advent
             {
                 if (grid[y][x + rightDistance] != '~')
                     grid[y][x + rightDistance] = '|';
+                else
+                {
+                    rightWall = true;
+                    break;
+                }
                 if (grid[y + 1][x + rightDistance] == '.' || grid[y + 1][x + rightDistance] == '|')
                 {
                     fillDown(x + rightDistance, y, ref grid);

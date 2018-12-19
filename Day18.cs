@@ -56,8 +56,6 @@ namespace Advent
                             int trees = 0;
                             foreach (int offset in offsets)
                             {
-                                if (index + offset < 0 || index + offset >= grid.Length)
-                                    continue;
                                 if (currState[index + offset] == '|')
                                 {
                                     trees++;
@@ -73,8 +71,6 @@ namespace Advent
                             int lumberyards = 0;
                             foreach (int offset in offsets)
                             {
-                                if (index + offset < 0 || index + offset >= grid.Length)
-                                    continue;
                                 if (currState[index + offset] == '#')
                                 {
                                     lumberyards++;
@@ -91,8 +87,6 @@ namespace Advent
                             bool anyLumberyards = false;
                             foreach (int offset in offsets)
                             {
-                                if (index + offset < 0 || index + offset >= grid.Length)
-                                    continue;
                                 if (currState[index + offset] == '|')
                                     anyTrees = true;
                                 else if (currState[index + offset] == '#')
