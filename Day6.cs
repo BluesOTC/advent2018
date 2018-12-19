@@ -41,15 +41,18 @@ namespace Advent
                 grid[i] = new int[maxY];
 
             //Day 6-1
+            int safeArea = 0;
             for (int row = 0; row < grid.Length; row++)
             {
                 for (int col = 0; col < grid[row].Length; col++)
                 {
                     int minDistance = Int32.MaxValue;
                     int closestIndex = -1;
+                    int sum = 0;
                     for (int index = 0; index < coordinates.Count; index++)
                     {
                         int distance = findManhattanDistance(row, col, coordinates[index][0], coordinates[index][1]);
+                        sum += distance;
                         if (distance < minDistance)
                         {
                             minDistance = distance;
@@ -59,6 +62,8 @@ namespace Advent
                             closestIndex = -1;
                     }
                     grid[row][col] = closestIndex + 1;
+                    if (sum < 10000)
+                        safeArea++;
                 }
             }
 
@@ -88,26 +93,7 @@ namespace Advent
             }
 
             Console.WriteLine("Max Area: " + areas.Max());
-
-            //Day 6-2
-            int area = 0;
-            for (int r = 0; r < grid.Length; r++)
-            {
-                for (int c = 0; c < grid[r].Length; c++)
-                {
-                    int sum = 0;
-                    foreach(int[] coordinate in coordinates)
-                    {
-                        sum += findManhattanDistance(r, c, coordinate[0], coordinate[1]);
-                        if (sum >= 10000)
-                            break;
-                    }
-                    if (sum < 10000)
-                        area++;
-                }
-            }
-
-            Console.WriteLine("Safe Area Size: " + area);
+            Console.WriteLine("Safe Area Size: " + safeArea);
         }
 
         static int findManhattanDistance(int x1, int y1, int x2, int y2)

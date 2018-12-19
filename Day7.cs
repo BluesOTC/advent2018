@@ -11,34 +11,38 @@ namespace Advent
         {
             Console.WriteLine("\nDay 7");
 
-            List<string> input = new List<string>();
+            Dictionary<char, List<char>> stepTree = new Dictionary<char, List<char>>();
             using (StreamReader reader = new StreamReader("input/input7.txt"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
-                    input.Add(line);
-            }
-
-            Dictionary<char, List<char>> stepTree = new Dictionary<char, List<char>>();
-            foreach (string line in input)
-            {
-                string[] split = line.Split(' ');
-                char prereq = split[1][0];
-                char subsequent = split[7][0];
-                if (!stepTree.ContainsKey(prereq))
-                    stepTree.Add(prereq, new List<char>());
-                if (!stepTree.ContainsKey(subsequent))
-                    stepTree.Add(subsequent, new List<char> { prereq });
-                else
-                    stepTree[subsequent].Add(prereq);
+                {
+                    string[] split = line.Split(' ');
+                    char prereq = split[1][0];
+                    char subsequent = split[7][0];
+                    if (!stepTree.ContainsKey(prereq))
+                        stepTree.Add(prereq, new List<char>());
+                    if (!stepTree.ContainsKey(subsequent))
+                        stepTree.Add(subsequent, new List<char> { prereq });
+                    else
+                        stepTree[subsequent].Add(prereq);
+                }
             }
 
             //TODO: redo part 1 and add print
+            List<char> completedSteps = new List<char>();
+            while (completedSteps.Count < stepTree.Count)
+            {
+                List<char> currSteps = stepTree.Keys.Where(x=>!completedSteps.Contains(x) && stepTree[x].All(completedSteps.Contains)).ToList();
+                currSteps.Sort();
+                completedSteps.AddRange(currSteps);
+            }
+            Console.Write("Step order " + new string(completedSteps.ToArray()));
 
             Dictionary<char, int> elfAssignments = new Dictionary<char, int>();
             List<char> remainingSteps = stepTree.Keys.ToList();
             remainingSteps.Sort();
-            List<char> completedSteps = new List<char>();
+            completedSteps.Clear();
             int time = 0;
             fillAssignments(ref elfAssignments, completedSteps, ref remainingSteps, time, stepTree);
             while (remainingSteps.Count > 0)

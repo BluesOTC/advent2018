@@ -35,9 +35,9 @@ namespace Advent
             Day9LinkedList.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;
-            //Day10.Run(); //this output is ugly
-            //Console.WriteLine("Run Time: " + (DateTime.Now - last));
-            //last = DateTime.Now;
+            Day10.Run(); //this output is ugly
+            Console.WriteLine("Run Time: " + (DateTime.Now - last));
+            last = DateTime.Now;
             Day11.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;

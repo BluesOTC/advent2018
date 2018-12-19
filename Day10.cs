@@ -68,7 +68,7 @@ namespace Advent
 
             for (int i = 0; i < additionalSteps; i++)
             {
-                Console.WriteLine("Seconds passed: " + (minSteps + i));
+                //Console.WriteLine("Seconds passed: " + (minSteps + i));
                 List<char[]> output = new List<char[]>();
                 for(int index = 0; index < 200; index++)
                     output.Add(Enumerable.Repeat('.', 236).ToArray());
@@ -78,12 +78,12 @@ namespace Advent
                     point[0].x += point[1].x;
                     point[0].y += point[1].y;
                 }
-                for(int index = 0; index < output.Count; index++)
+                /*for(int index = 0; index < output.Count; index++)
                 {
                     Console.WriteLine(new string(output[index]));
                 }
                 Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine();*/
             }
         }
     }
