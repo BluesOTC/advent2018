@@ -43,7 +43,7 @@ namespace Advent
                 }
             }
 
-            int maxDistance = 236;
+            int maxDistance = 18;
             int minSteps = (ymax - ymin - maxDistance / 2) / (yminvel - ymaxvel);
             int additionalSteps = (ymax - ymin + maxDistance / 2) / (yminvel - ymaxvel) - minSteps;
 
@@ -68,22 +68,23 @@ namespace Advent
 
             for (int i = 0; i < additionalSteps; i++)
             {
-                //Console.WriteLine("Seconds passed: " + (minSteps + i));
+                Console.WriteLine("Seconds passed: " + (minSteps + i));
                 List<char[]> output = new List<char[]>();
                 for(int index = 0; index < 200; index++)
-                    output.Add(Enumerable.Repeat('.', 236).ToArray());
+                    output.Add(Enumerable.Repeat('.', maxDistance).ToArray());
                 foreach (List<Coordinate> point in points)
                 {
                     output[point[0].x][point[0].y] = '#';
                     point[0].x += point[1].x;
                     point[0].y += point[1].y;
                 }
-                /*for(int index = 0; index < output.Count; index++)
+                for(int index = 0; index < output.Count; index++)
                 {
-                    Console.WriteLine(new string(output[index]));
+                    if (!output[index].All(x => x == '.'))
+                        Console.WriteLine(new string(output[index]).Substring(0, maxDistance));
                 }
                 Console.WriteLine();
-                Console.WriteLine();*/
+                Console.WriteLine();
             }
         }
     }

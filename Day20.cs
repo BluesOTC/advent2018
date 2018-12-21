@@ -8,72 +8,94 @@ namespace Advent
 {
     class Day20
     {
-        static StringBuilder regexMap;
+        public class Room : Coordinate
+        {
+            public List<Room> connections;
+
+            public Room(int x, int y) : base(x, y)
+            {
+                connections = new List<Room>();
+            }
+
+            public Room AddNeighbor(int x, int y)
+            {
+                Room room = new Room(this.x + x, this.y + y);
+                connections.Add(room);
+                return room;
+            }
+
+            public override bool Equals(object other)
+            {
+                return base.Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+        }
 
         public static void Run()
         {
             Console.WriteLine("\nDay 20");
-            List<string> backtracks = new List<string> { "NS", "SN", "EW", "WE" };
+            string regexMap;
             using (StreamReader reader = new StreamReader("input/input20.txt"))
-                regexMap = new StringBuilder(reader.ReadLine());
+                regexMap = reader.ReadLine();
 
-            HashSet<Coordinate> coordinates = new HashSet<Coordinate>();
-            Coordinate currCoordinate = new Coordinate(0, 0);
-            coordinates.Add(currCoordinate);
-            Stack<Coordinate> junctions = new Stack<Coordinate>();
+            HashSet<Room> rooms = new HashSet<Room>();
+            Room currRoom = new Room(0, 0);
+            rooms.Add(currRoom);
+            Stack<Room> junctions = new Stack<Room>();
             for(int index = 0; index < regexMap.Length; index++)
             {
                 switch(regexMap[index])
                 {
                     case 'N':
-                        coordinates.Add(currCoordinate = currCoordinate.AddVector(0, -1));
+                        rooms.Add(currRoom = currRoom.AddNeighbor(0, -1));
                         break;
                     case 'S':
-                        coordinates.Add(currCoordinate = currCoordinate.AddVector(0, 1));
+                        rooms.Add(currRoom = currRoom.AddNeighbor(0, 1));
                         break;
                     case 'E':
-                        coordinates.Add(currCoordinate = currCoordinate.AddVector(1, 0));
+                        rooms.Add(currRoom = currRoom.AddNeighbor(1, 0));
                         break;
                     case 'W':
-                        coordinates.Add(currCoordinate = currCoordinate.AddVector(-1, 0));
+                        rooms.Add(currRoom = currRoom.AddNeighbor(-1, 0));
                         break;
                     case '(':
-                        junctions.Push(currCoordinate);
+                        junctions.Push(currRoom);
                         break;
                     case '|':
-                        currCoordinate = junctions.Peek();
+                        currRoom = junctions.Peek();
                         break;
                     case ')':
-                        currCoordinate = junctions.Pop();
+                        currRoom = junctions.Pop();
                         break;
                 }
             }
 
-            List<Coordinate> directions = new List<Coordinate> { new Coordinate(0, -1), new Coordinate(-1, 0), new Coordinate(1, 0), new Coordinate(0, 1) };
             int depth = 0;
-            HashSet<Coordinate> currentRooms = new HashSet<Coordinate>();
-            HashSet<Coordinate> visitedRooms = new HashSet<Coordinate>();
-            currentRooms.Add(new Coordinate(0, 0));
-            visitedRooms.Add(new Coordinate(0, 0));
-            while (visitedRooms.Count < coordinates.Count)
+            HashSet<Room> currentRooms = new HashSet<Room>();
+            HashSet<Room> visitedRooms = new HashSet<Room>();
+            currentRooms.Add(rooms.First(x => x.x == 0 && x.y == 0));
+            visitedRooms.Add(currentRooms.Single());
+            while (visitedRooms.Count < rooms.Count)
             {
-                HashSet<Coordinate> nextRooms = new HashSet<Coordinate>();
-                foreach (Coordinate source in currentRooms)
+                 HashSet<Room> nextRooms = new HashSet<Room>();
+                foreach (Room source in currentRooms)
                 {
-                    foreach (Coordinate vector in directions)
+                    foreach (Room neighbor in source.connections)
                     {
-                        Coordinate nextRoom = source.AddVector(vector);
-                        if(coordinates.Contains(nextRoom))
-                        {
-                            nextRooms.Add(nextRoom);
-                            visitedRooms.Add(nextRoom);
-                        }
+                        nextRooms.Add(neighbor);
+                        visitedRooms.Add(neighbor);
                     }
                 }
                 currentRooms = nextRooms;
                 depth++;
+                if (depth == 999)
+                    Console.WriteLine("Part 2 - Rooms after 1000 doors: " + (rooms.Count - visitedRooms.Count));
             }
-            Console.WriteLine("Distance traveled: " + depth);
+            Console.WriteLine("Part 1 - Distance traveled: " + depth);
         }
     }
 }
