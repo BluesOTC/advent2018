@@ -25,6 +25,61 @@ namespace Advent
         {
             return String.Format("{0} {1} {2} {3}", operation, a, b, c);
         }
+
+        public void doOperation(ref int[] registers)
+        {
+            switch (operation)
+            {
+                case OperationType.ADDI:
+                    registers[c] = registers[a] + b;
+                    break;
+                case OperationType.ADDR:
+                    registers[c] = registers[a] + registers[b];
+                    break;
+                case OperationType.MULI:
+                    registers[c] = registers[a] * b;
+                    break;
+                case OperationType.MULR:
+                    registers[c] = registers[a] * registers[b];
+                    break;
+                case OperationType.BANI:
+                    registers[c] = registers[a] & b;
+                    break;
+                case OperationType.BANR:
+                    registers[c] = registers[a] & registers[b];
+                    break;
+                case OperationType.BORI:
+                    registers[c] = registers[a] | b;
+                    break;
+                case OperationType.BORR:
+                    registers[c] = registers[a] | registers[b];
+                    break;
+                case OperationType.SETI:
+                    registers[c] = a;
+                    break;
+                case OperationType.SETR:
+                    registers[c] = registers[a];
+                    break;
+                case OperationType.EQIR:
+                    registers[c] = a == registers[b] ? 1 : 0;
+                    break;
+                case OperationType.EQRI:
+                    registers[c] = registers[a] == b ? 1 : 0;
+                    break;
+                case OperationType.EQRR:
+                    registers[c] = registers[a] == registers[b] ? 1 : 0;
+                    break;
+                case OperationType.GTIR:
+                    registers[c] = a > registers[b] ? 1 : 0;
+                    break;
+                case OperationType.GTRI:
+                    registers[c] = registers[a] > b ? 1 : 0;
+                    break;
+                case OperationType.GTRR:
+                    registers[c] = registers[a] > registers[b] ? 1 : 0;
+                    break;
+            }
+        }
     }
 
     class Day19
@@ -50,24 +105,19 @@ namespace Advent
             int[] registers = new int[6];
             while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
             {
-                doOperation(input[registers[boundRegister]], ref registers);
+                input[registers[boundRegister]].doOperation(ref registers);
                 registers[boundRegister]++;
             }
             Console.WriteLine("Part 1: " + registers[0]);
 
             registers = new int[6];
             registers[0] = 1;
-            //int[] registers = new int[] { 0, 10551292, 4, 10551292, 10551292, 1 };
             while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
             {
                 if (registers[boundRegister] == input.Count - 1)
                     break;
-                doOperation(input[registers[boundRegister]], ref registers);
+                input[registers[boundRegister]].doOperation(ref registers);
                 registers[boundRegister]++;
-                /*Console.Write("IP: " + registers[boundRegister] + ", Instruction: " + input[registers[boundRegister]] + ", Registers: [");
-                foreach (int i in registers)
-                    Console.Write(i + ", ");
-                Console.WriteLine("]");*/
             }
             int threshold = (int)Math.Sqrt(registers[1]);
             for(registers[5] = 1; registers[5] <= threshold; registers[5]++)
@@ -76,61 +126,6 @@ namespace Advent
                     registers[0] += registers[5];
             }
             Console.WriteLine("Part 2: " + (registers[0] + registers[1]));
-        }
-
-        static void doOperation(Instruction instruction, ref int[] registers)
-        {
-            switch (instruction.operation)
-            {
-                case OperationType.ADDI:
-                    registers[instruction.c] = registers[instruction.a] + instruction.b;
-                    break;
-                case OperationType.ADDR:
-                    registers[instruction.c] = registers[instruction.a] + registers[instruction.b];
-                    break;
-                case OperationType.MULI:
-                    registers[instruction.c] = registers[instruction.a] * instruction.b;
-                    break;
-                case OperationType.MULR:
-                    registers[instruction.c] = registers[instruction.a] * registers[instruction.b];
-                    break;
-                case OperationType.BANI:
-                    registers[instruction.c] = registers[instruction.a] & instruction.b;
-                    break;
-                case OperationType.BANR:
-                    registers[instruction.c] = registers[instruction.a] & registers[instruction.b];
-                    break;
-                case OperationType.BORI:
-                    registers[instruction.c] = registers[instruction.a] | instruction.b;
-                    break;
-                case OperationType.BORR:
-                    registers[instruction.c] = registers[instruction.a] | registers[instruction.b];
-                    break;
-                case OperationType.SETI:
-                    registers[instruction.c] = instruction.a;
-                    break;
-                case OperationType.SETR:
-                    registers[instruction.c] = registers[instruction.a];
-                    break;
-                case OperationType.EQIR:
-                    registers[instruction.c] = instruction.a == registers[instruction.b] ? 1 : 0;
-                    break;
-                case OperationType.EQRI:
-                    registers[instruction.c] = registers[instruction.a] == instruction.b ? 1 : 0;
-                    break;
-                case OperationType.EQRR:
-                    registers[instruction.c] = registers[instruction.a] == registers[instruction.b] ? 1 : 0;
-                    break;
-                case OperationType.GTIR:
-                    registers[instruction.c] = instruction.a > registers[instruction.b] ? 1 : 0;
-                    break;
-                case OperationType.GTRI:
-                    registers[instruction.c] = registers[instruction.a] > instruction.b ? 1 : 0;
-                    break;
-                case OperationType.GTRR:
-                    registers[instruction.c] = registers[instruction.a] > registers[instruction.b] ? 1 : 0;
-                    break;
-            }
         }
     }
 }

@@ -39,6 +39,11 @@ namespace Advent
             return new Coordinate(this.x + other.x, this.y + other.y);
         }
 
+        public Coordinate AddVector(int x, int y)
+        {
+            return new Coordinate(this.x + x, this.y + y);
+        }
+
         public Coordinate GetVector(Coordinate source)
         {
             return new Coordinate(this.x - source.x, this.y - source.y);
