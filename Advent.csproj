@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdventStructs.cs" />
+    <Compile Include="AdventCoordinate.cs" />
+    <Compile Include="AdventInstruction.cs" />
     <Compile Include="Day14.cs" />
     <Compile Include="Day1.cs" />
     <Compile Include="Day10.cs" />

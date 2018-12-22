@@ -5,27 +5,6 @@ using System.IO;
 
 namespace Advent
 {
-    public enum OperationType
-    {
-        ADDR,
-        ADDI,
-        MULR,
-        MULI,
-        BANR,
-        BANI,
-        BORR,
-        BORI,
-        SETR,
-        SETI,
-        GTIR,
-        GTRI,
-        GTRR,
-        EQIR,
-        EQRI,
-        EQRR,
-        NUM_TYPES
-    }
-
     class Day16
     {
         public static void Run()
