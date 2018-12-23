@@ -29,6 +29,9 @@ namespace Advent
 
     struct Instruction
     {
+        public static Dictionary<string, OperationType> opDictionary = new Dictionary<string, OperationType> { { "addi", OperationType.ADDI }, { "addr", OperationType.ADDR }, { "muli", OperationType.MULI },{ "mulr", OperationType.MULR },{ "bani", OperationType.BANI },{ "banr", OperationType.BANR },
+                { "bori", OperationType.BORI}, {"borr",OperationType.BORR },{"seti",OperationType.SETI },{"setr",OperationType.SETR },{"eqir",OperationType.EQIR },{"eqri",OperationType.EQRI },{"eqrr",OperationType.EQRR },{"gtir",OperationType.GTIR },{"gtri",OperationType.GTRI },{"gtrr",OperationType.GTRR } };
+
         public int a { get; set; }
         public int b { get; set; }
         public int c { get; set; }
