@@ -82,8 +82,8 @@ namespace Advent
                 terrainGrid = new int[(targetY + 100)][];
                 for (int row = 0; row < erosionGrid.Length; row++)
                 {
-                    erosionGrid[row] = new int[(targetX + 1) * 2];
-                    terrainGrid[row] = new int[(targetX + 1) * 2];
+                    erosionGrid[row] = new int[targetX + 100];
+                    terrainGrid[row] = new int[targetX + 100];
                 }
             }
             for (int y = 0; y < erosionGrid.Length; y++)
