@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Advent
 {
-    class CaveNode : Coordinate, IEquatable<CaveNode>
+    class CaveNode : Coordinate, IEquatable<CaveNode>, IComparer<CaveNode>, IComparable<CaveNode>
     {
         public int terrain;
         public int equipment;
@@ -43,11 +43,24 @@ namespace Advent
         {
             return this.x == other.x && this.y == other.y && this.equipment == other.equipment;
         }
+
+        int IComparer<CaveNode>.Compare(CaveNode x, CaveNode y)
+        {
+            return x.f - y.f;
+        }
+
+        int IComparable<CaveNode>.CompareTo(CaveNode other)
+        {
+            if (this.f == other.f)
+                return this.GetHashCode() - other.GetHashCode();
+            else
+                return this.f - other.f;
+        }
     }
 
     class Day22
     {
-        static HashSet<CaveNode> openNodes = new HashSet<CaveNode>();
+        static SortedSet<CaveNode> openNodes = new SortedSet<CaveNode>();
         static HashSet<CaveNode> closedNodes = new HashSet<CaveNode>();
 
         public static void Run()
@@ -98,7 +111,7 @@ namespace Advent
             openNodes.Add(new CaveNode(null, 0, 0, targetX, targetY, 0, 0)); //start with torch
             while (true)
             {
-                CaveNode currNode = openNodes.Take(5).OrderBy(x => x.f).FirstOrDefault();
+                CaveNode currNode = openNodes.FirstOrDefault();
                 if (currNode.x == targetX && currNode.y == targetY)
                 {
                     if (currNode.equipment == 0)
