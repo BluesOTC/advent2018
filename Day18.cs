@@ -32,23 +32,26 @@ namespace Advent
                 string state;
                 if (!duplicateFound)
                 {
-                    if (statesSeen.ContainsKey(state = new string(currState.ToArray())))
-                    {
-                        duplicateFound = true;
+                    if (duplicateFound = statesSeen.ContainsKey(state = new string(currState.ToArray())))
                         minutes = (minutes - minute) % (minute - statesSeen[state]) + minute;
-                    }
                     else
                         statesSeen.Add(state, minute);
                 }
                 for (int index = 50; index < grid.Length - 50; index++)
                 {
                     List<int> offsets;
-                    if (index % 50 == 0)
-                        offsets = new List<int> { -50, -49, 1, 50, 51 };
-                    else if (index % 50 == 49)
-                        offsets = new List<int> { -51, -50, -1, 49, 50 };
-                    else
-                        offsets = new List<int> { -51, -50, -49, -1, 1, 49, 50, 51 };
+                    switch (index % 50)
+                    {
+                        case 0:
+                            offsets = new List<int> { -50, -49, 1, 50, 51 };
+                            break;
+                        case 49:
+                            offsets = new List<int> { -51, -50, -1, 49, 50 };
+                            break;
+                        default:
+                            offsets = new List<int> { -51, -50, -49, -1, 1, 49, 50, 51 };
+                            break;
+                    }
 
                     switch (currState[index])
                     {
@@ -58,8 +61,7 @@ namespace Advent
                             {
                                 if (currState[index + offset] == '|')
                                 {
-                                    trees++;
-                                    if (trees >= 3)
+                                    if (++trees >= 3)
                                     {
                                         grid[index] = '|';
                                         break;
@@ -73,8 +75,7 @@ namespace Advent
                             {
                                 if (currState[index + offset] == '#')
                                 {
-                                    lumberyards++;
-                                    if (lumberyards >= 3)
+                                    if (++lumberyards >= 3)
                                     {
                                         grid[index] = '#';
                                         break;
@@ -101,9 +102,9 @@ namespace Advent
                     }
                 }
                 if (minute == 9)
-                    Console.WriteLine("Minute 10 Resource Value: " + (grid.Where(x => x == '|').Count() * grid.Where(x => x == '#').Count()));
+                    Console.WriteLine("Minute 10 Resource Value: " + (grid.Skip(50).Take(2500).Where(x => x == '|').Count() * grid.Skip(50).Take(2500).Where(x => x == '#').Count()));
             }
-            Console.WriteLine("Final Resource Value: " + (grid.Where(x => x == '|').Count() * grid.Where(x => x == '#').Count()));
+            Console.WriteLine("Final Resource Value: " + (grid.Skip(50).Take(2500).Where(x => x == '|').Count() * grid.Skip(50).Take(2500).Where(x => x == '#').Count()));
         }
     }
 }

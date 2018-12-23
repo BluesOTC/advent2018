@@ -27,12 +27,16 @@ namespace Advent
                 }
             }
             int[] registers = new int[6];
-            while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
+            //while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
+            try
             {
-                input[registers[boundRegister]].doOperation(ref registers);
-                registers[boundRegister]++;
+                for (; ; registers[boundRegister]++)
+                    input[registers[boundRegister]].doOperation(ref registers);
             }
-            Console.WriteLine("Part 1: " + registers[0]);
+            catch
+            {
+                Console.WriteLine("Part 1: " + registers[0]);
+            }
 
             registers = new int[6];
             registers[0] = 1;
