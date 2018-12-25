@@ -17,6 +17,7 @@ namespace Advent
             this.z = z;
             this.signalRadius = signalRadius;
             vertices.Add(new Nanobot(x + signalRadius, y, z, 0));
+            //Test all vertices for bots in range, then binary search the volume, pruning anything that's less than the max found
         }
 
         int IComparable<Nanobot>.CompareTo(Nanobot other)

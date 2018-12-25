@@ -13,6 +13,7 @@ namespace Advent
             List<string[]> input = new List<string[]>();
             HashSet<Coordinate> claims = new HashSet<Coordinate>();
             HashSet<Coordinate> conflicts = new HashSet<Coordinate>();
+            //HashSet<(int, bool)>
             using (StreamReader reader = new StreamReader("input/input3.txt"))
             {
                 string line;
