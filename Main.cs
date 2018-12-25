@@ -76,8 +76,11 @@ namespace Advent
             last = DateTime.Now;
             Day23.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
-            last = DateTime.Now;*/
+            last = DateTime.Now;
             Day24.Run();
+            Console.WriteLine("Run Time: " + (DateTime.Now - last));
+            last = DateTime.Now;*/
+            Day25.Run();
             Console.WriteLine("Run Time: " + (DateTime.Now - last));
             last = DateTime.Now;
             Console.WriteLine("\nTotal Run Time: " + (DateTime.Now - start));
