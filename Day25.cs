@@ -70,6 +70,7 @@ namespace Advent
         static int Find(int i)
         {
             return parentID[i] == i ? i : Find(parentID[i]);
+            //return parentID[i] == i ? i : parentID[i] = Find(parentID[i]);
         }
 
         static void Union(int i, int j)
