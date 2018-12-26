@@ -21,12 +21,11 @@ namespace Advent
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] splitLine = line.Split(' ');
-                    input.Add(new Instruction(Int32.Parse(splitLine[1]), Int32.Parse(splitLine[2]), Int32.Parse(splitLine[3]), Instruction.opDictionary[splitLine[0]]));
+                    input.Add(new Instruction(int.Parse(splitLine[1]), int.Parse(splitLine[2]), int.Parse(splitLine[3]), Instruction.opDictionary[splitLine[0]]));
                 }
             }
             int[] registers = new int[6];
-            //while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
-            try
+            try //waiting to catch an IndexOutOfBounds
             {
                 for (; ; registers[boundRegister]++)
                     input[registers[boundRegister]].doOperation(ref registers);
@@ -45,7 +44,7 @@ namespace Advent
                 input[registers[boundRegister]].doOperation(ref registers);
                 registers[boundRegister]++;
             }
-            int threshold = (int)Math.Sqrt(registers[1]);
+            int threshold = (int)Math.Sqrt(registers[1]); //search for factors up to sqrt(n)
             for(registers[5] = 1; registers[5] <= threshold; registers[5]++)
             {
                 if (registers[1] % registers[5] == 0)

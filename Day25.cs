@@ -51,9 +51,7 @@ namespace Advent
                 for (int j = 0; j < pointList.Count; j++)
                 {
                     if (pointList[i].findManhattanDistance(pointList[j]) <= 3)
-                    {
-                        Union(i, j);
-                    }
+                        Union(i, j); //join trees if points can connect
                 }
             }
 

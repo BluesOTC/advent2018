@@ -19,7 +19,7 @@ namespace Advent
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    int addend = Int32.Parse(line.Substring(1, line.Length - 1)) * (line[0] == '+' ? 1 : -1);
+                    int addend = int.Parse(line.Substring(1, line.Length - 1)) * (line[0] == '+' ? 1 : -1);
                     sum += addend;
                     addends.Add(addend);
                     if (!values.Add(sum))

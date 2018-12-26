@@ -38,7 +38,7 @@ namespace Advent
             int plantShift = 0;
             int generation = 0;
             HashSet<string> patternsSeen = new HashSet<string>();
-            for (; generation < generations; generation++) //edit generation number after first run to see how plant pattern shifts
+            for (; generation < generations; generation++)
             {
                 char[] currState = new char[currGeneration.Length];
                 currGeneration.CopyTo(0, currState, 0, currGeneration.Length);
@@ -60,8 +60,6 @@ namespace Advent
                 currGeneration = nextGeneration;
                 if (patternsSeen.Contains(currGeneration.ToString().Trim('.')))
                 {
-                    //Console.WriteLine(String.Format("Repeat Pattern found at generation {0}", generation));
-                    //Console.WriteLine(String.Format("First plant found at pot #{0}", currGeneration.ToString().IndexOf('#')));
                     if (shouldBreak)
                         break;
                     shouldBreak = true;
@@ -96,7 +94,6 @@ namespace Advent
                     total += (index - offset);
                 }
             }
-            //Console.WriteLine("Repeat Generation Sum Product: " + total + " from " + plants + " plants");
             long finalTotal = total + (long)plantShift * (50000000000L - (long)generation) * (long)plants;
             Console.WriteLine("Generation 50000000000 Sum Product: " + finalTotal + " from " + plants + " plants");
         }

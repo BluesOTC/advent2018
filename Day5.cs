@@ -22,7 +22,7 @@ namespace Advent
                 if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
                 {
                     polymer.Remove(index, 2);
-                    index -= index > 1 ? 2 : 1;
+                    index -= index > 1 ? 2 : 1; //check if preceding base is now paired
                 }
             }
             Console.WriteLine("Polymer Length: " + polymer.Length);
@@ -31,10 +31,9 @@ namespace Advent
             int minLength = polymer.Length;
             char[] copy = new char[polymer.Length];
             polymer.CopyTo(0, copy, 0, polymer.Length);
-            string polymerCopy = new string(copy);
             for (char candidate = 'A'; candidate <= 'Z'; candidate++)
             {
-                polymer = new StringBuilder(polymerCopy).Replace(candidate + "", null).Replace((candidate + "").ToLower(), null);
+                polymer = new StringBuilder(new string(copy)).Replace(candidate + "", null).Replace((candidate + "").ToLower(), null);
                 for (int index = 0; index < polymer.Length - 2; index++)
                 {
                     if (Math.Abs(polymer[index] - polymer[index + 1]) == 32)
@@ -43,7 +42,6 @@ namespace Advent
                         index -= index > 1 ? 2 : 1;
                     }
                 }
-                //Console.WriteLine(polymer.ToString());
                 minLength = Math.Min(minLength, polymer.Length);
             }
             Console.WriteLine("Min Polymer Length: " + minLength);

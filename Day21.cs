@@ -21,7 +21,7 @@ namespace Advent
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] splitLine = line.Split(' ');
-                    input.Add(new Instruction(Int32.Parse(splitLine[1]), Int32.Parse(splitLine[2]), Int32.Parse(splitLine[3]), Instruction.opDictionary[splitLine[0]]));
+                    input.Add(new Instruction(int.Parse(splitLine[1]), int.Parse(splitLine[2]), int.Parse(splitLine[3]), Instruction.opDictionary[splitLine[0]]));
                 }
             }
             int[] registers = new int[6];
@@ -29,7 +29,7 @@ namespace Advent
             bool part1Printed = false;
             while (registers[boundRegister] >= 0 && registers[boundRegister] < input.Count)
             {
-                if (input[registers[boundRegister]].operation == OperationType.EQRR)
+                if (input[registers[boundRegister]].operation == OperationType.EQRR) //capture all possible stopping values until a repeat is found
                 {
                     int currValue;
                     if (!values.Contains(currValue = registers[input[registers[boundRegister]].a]))
@@ -40,13 +40,13 @@ namespace Advent
                         break;
                     }
                 }
-                if (registers[boundRegister] == 18)
+                if (registers[boundRegister] == 18) //jump to end of loop instead of iterating through
                 {
                     registers[3] = Math.Max(registers[3], registers[1] / 256);
                     registers[5] = (registers[3] + 1) * 256;
                     registers[2] = 20;
                 }
-                if (!part1Printed && registers[boundRegister] == 28)
+                if (!part1Printed && registers[boundRegister] == 28) //capture the stopping value once all the initialization is done
                 {
                     part1Printed = true;
                     Console.WriteLine("Part 1 Value: " + registers[4]);

@@ -28,8 +28,8 @@ namespace Advent
             {
                 int[] before = new int[] { input[index][9] - '0', input[index][12] - '0', input[index][15] - '0', input[index][18] - '0' };
                 string[] operation = input[index + 1].Split(' ');
-                int[] operands = new int[] { Int32.Parse(operation[1]), Int32.Parse(operation[2]), Int32.Parse(operation[3]) };
-                int currOpcode = Int32.Parse(operation[0]);
+                int[] operands = new int[] { int.Parse(operation[1]), int.Parse(operation[2]), int.Parse(operation[3]) };
+                int currOpcode = int.Parse(operation[0]);
                 int[] after = new int[] { input[index + 2][9] - '0', input[index + 2][12] - '0', input[index + 2][15] - '0', input[index + 2][18] - '0' };
                 int validOpcodes = 0;
                 for(OperationType opcode = OperationType.ADDR; opcode < OperationType.NUM_TYPES; opcode++)
@@ -71,11 +71,6 @@ namespace Advent
                         assignedOpcodes.Add(index, opcodeCandidates[index][0]);
                 }
             }
-            /*for (int index = 0; index < opcodeCandidates.Count; index++)
-            {
-                foreach (OperationType op in opcodeCandidates[index])
-                    Console.WriteLine(index + ": " + op);
-            }*/
             Console.WriteLine(String.Format("3+ opcode samples: {0}", total));
             
             input = new List<string>();
@@ -90,8 +85,8 @@ namespace Advent
             for (int index = 0; index < input.Count; index++)
             {
                 string[] operation = input[index].Split(' ');
-                int[] operands = new int[] { Int32.Parse(operation[1]), Int32.Parse(operation[2]), Int32.Parse(operation[3]) };
-                OperationType currOpcode = assignedOpcodes[Int32.Parse(operation[0])];
+                int[] operands = new int[] { int.Parse(operation[1]), int.Parse(operation[2]), int.Parse(operation[3]) };
+                OperationType currOpcode = assignedOpcodes[int.Parse(operation[0])];
                 registers = doOperation(currOpcode, registers, operands);
             }
             Console.WriteLine("Test program output: " + registers[0]);

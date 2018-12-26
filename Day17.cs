@@ -22,7 +22,7 @@ namespace Advent
 
             List<char[]> grid = new List<char[]>();
 
-            int minY = Int32.MaxValue;
+            int minY = int.MaxValue;
             foreach (string line in input) //X range from 466-653, Y range from 6-1895, spring at 500,0
             {
                 string[] coordinates = line.Split(new char[] { '=', '.', ',' });
@@ -30,11 +30,11 @@ namespace Advent
                 char coord2 = coordinates[2][0];
                 if (coord1 == 'x')
                 {
-                    int x = Int32.Parse(coordinates[1]);
-                    int ystart = Int32.Parse(coordinates[3]);
+                    int x = int.Parse(coordinates[1]);
+                    int ystart = int.Parse(coordinates[3]);
                     if (minY > ystart)
                         minY = ystart;
-                    int yend = Int32.Parse(coordinates[5]);
+                    int yend = int.Parse(coordinates[5]);
                     while (grid.Count <= yend)
                         grid.Add(Enumerable.Repeat('.', 1000).ToArray());
                     for (; ystart <= yend; ystart++)
@@ -44,13 +44,13 @@ namespace Advent
                 }
                 else
                 {
-                    int y = Int32.Parse(coordinates[1]);
+                    int y = int.Parse(coordinates[1]);
                     while (grid.Count <= y)
                         grid.Add(Enumerable.Repeat('.', 1000).ToArray());
                     if (minY > y)
                         minY = y;
-                    int xstart = Int32.Parse(coordinates[3]);
-                    int xend = Int32.Parse(coordinates[5]);
+                    int xstart = int.Parse(coordinates[3]);
+                    int xend = int.Parse(coordinates[5]);
                     for (; xstart <= xend; xstart++)
                     {
                         grid[y][xstart] = '#';

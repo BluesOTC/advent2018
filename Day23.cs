@@ -67,7 +67,7 @@ namespace Advent
                 {
                     if (this.signalRadius == other.signalRadius)
                         return this.GetHashCode() - other.GetHashCode();
-                    return other.signalRadius - this.signalRadius;
+                    return other.signalRadius - this.signalRadius; //search larger octahedra first if distance is tied since they'll contain closer points
                 }
                 else
                     return distDiff;
@@ -115,8 +115,8 @@ namespace Advent
             {
                 Octahedron curr = octahedra.First();
                 //Console.WriteLine("Current Octahedron radius: " + curr.signalRadius + ", Bots in Octahedron: " + curr.botsInRange);
-                int nextRadius = curr.signalRadius * 2 / 3 + (curr.signalRadius * 2) % 3;
-                if (nextRadius == curr.signalRadius)
+                int nextRadius = curr.signalRadius * 2 / 3 + (curr.signalRadius * 2) % 3; //add back remainder to ensure greater coverage since their centers are misplaced
+                if (nextRadius == curr.signalRadius) //integer division issues at low values
                     nextRadius--;
                 if (curr.signalRadius > 1)
                 {

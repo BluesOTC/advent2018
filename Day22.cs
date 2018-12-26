@@ -74,10 +74,10 @@ namespace Advent
             int depth;
             using (StreamReader reader = new StreamReader("input/input22.txt"))
             {
-                depth = Int32.Parse(reader.ReadLine().Split(' ')[1]);
+                depth = int.Parse(reader.ReadLine().Split(' ')[1]);
                 string[] target = reader.ReadLine().Split(' ', ',');
-                targetX = Int32.Parse(target[1]);
-                targetY = Int32.Parse(target[2]);
+                targetX = int.Parse(target[1]);
+                targetY = int.Parse(target[2]);
                 erosionGrid = new int[(targetY + 100)][];
                 terrainGrid = new int[(targetY + 100)][];
                 for (int row = 0; row < erosionGrid.Length; row++)
@@ -119,7 +119,7 @@ namespace Advent
                         Console.WriteLine("Quickest Time to Target: " + currNode.costToNode);
                         break;
                     }
-                    else
+                    else //switch to torch and check other candidates for faster pathing that arrive with the torch already equipped
                     {
                         currNode.equipment = 0;
                         currNode.f += 7;
@@ -131,7 +131,7 @@ namespace Advent
                     openNodes.Remove(currNode);
 
                     int terrain;
-                    if (currNode.x > 0)
+                    if (currNode.x > 0) //check if array index is in bounds, then continue with current equipment if possible, else switch to proper equipment
                     {
                         terrain = terrainGrid[currNode.y][currNode.x - 1];
                         if (currNode.equipment != (terrain + 2) % 3)
@@ -169,10 +169,10 @@ namespace Advent
 
         static void tryAddNode(CaveNode next)
         {
-            if (closedNodes.Contains(next) )
+            if (closedNodes.Contains(next))
                 return;
             CaveNode candidate;
-            if (openNodes.Contains(next))
+            if (openNodes.Contains(next)) //update f and g as necessary
             {
                 openNodes.TryGetValue(next, out candidate);
                 candidate.costToNode = Math.Min(candidate.costToNode, next.costToNode);

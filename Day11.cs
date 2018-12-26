@@ -49,7 +49,7 @@ namespace Advent
                 }
             }
 
-            int maxPower = Int32.MinValue;
+            int maxPower = int.MinValue;
             Coordinate maxCorner = null;
 
             int maxLength = 3;

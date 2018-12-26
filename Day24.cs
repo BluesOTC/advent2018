@@ -18,15 +18,15 @@ namespace Advent
 
     class Army
     {
-        public long units;
-        public long hp;
-        public long damage;
-        public long initiative;
+        public int units;
+        public int hp;
+        public int damage;
+        public int initiative;
         public int[] modifiers;
         public AttackType attack;
         public bool isImmuneArmy;
 
-        public Army(long units, long hp, long damage, long initiative, int[] modifiers, AttackType attack, bool bImmune)
+        public Army(int units, int hp, int damage, int initiative, int[] modifiers, AttackType attack, bool bImmune)
         {
             this.units = units;
             this.hp = hp;
@@ -37,7 +37,7 @@ namespace Advent
             this.isImmuneArmy = bImmune;
         }
 
-        public long getEffectivePower()
+        public int getEffectivePower()
         {
             return units * damage;
         }
@@ -45,10 +45,10 @@ namespace Advent
         public Army chooseTarget(IEnumerable<Army> candidates)
         {
             Army bestTarget = null;
-            long maxDamage = 0;
+            int maxDamage = 0;
             foreach (Army candidate in candidates)
             {
-                long damage;
+                int damage;
                 if ((damage = this.calculateDamage(candidate)) > maxDamage) //because the candidate list should already be sorted, the first instance of damage should be the correct target
                 {
                     bestTarget = candidate;
@@ -58,12 +58,12 @@ namespace Advent
             return bestTarget;
         }
 
-        public long calculateDamage(Army target)
+        public int calculateDamage(Army target)
         {
             return this.getEffectivePower() * target.modifiers[(int)this.attack];
         }
 
-        public void takeDamage(long damageTaken)
+        public void takeDamage(int damageTaken)
         {
             units -= damageTaken / hp;
         }
@@ -73,7 +73,7 @@ namespace Advent
     {
         static Dictionary<string, AttackType> typeDict = new Dictionary<string, AttackType> { { "cold", AttackType.COLD }, { "slashing", AttackType.SLASHING }, { "bludgeoning", AttackType.BLUDGEONING }, { "fire", AttackType.FIRE }, { "radiation", AttackType.RADIATTION } };
 
-        static int CompareArmyTargetingOrder(Army x, Army y)
+        static int CompareTargetingOrder(Army x, Army y)
         {
             if (x.getEffectivePower() == y.getEffectivePower())
                 return (int)(y.initiative - x.initiative);
@@ -105,7 +105,7 @@ namespace Advent
                     {
                         int resistEnd = line.IndexOf(')');
                         string resistances = line.Substring(resistStart + 1, resistEnd - resistStart - 1);
-                        if (resistances.Contains(";")) 
+                        if (resistances.Contains(";"))
                         {
                             if (resistances[0] == 'i')
                             {
@@ -171,15 +171,18 @@ namespace Advent
                     allArmies.Add(new Army(army.units, army.hp, army.isImmuneArmy ? army.damage + boost : army.damage, army.initiative, army.modifiers, army.attack, army.isImmuneArmy));
                 while (allArmies.Any(x => x.isImmuneArmy) && allArmies.Any(x => !x.isImmuneArmy))
                 {
-                    //Console.WriteLine("Immune Armies: " + String.Join(", ", allArmies.Where(x => x.isImmuneArmy).Select(x => x.damage)));
-                    long startingUnits = allArmies.Sum(x => x.units);
+                    int startingUnits = allArmies.Sum(x => x.units);
+                    allArmies.Sort(CompareTargetingOrder);
                     Dictionary<Army, Army> targets = new Dictionary<Army, Army>();
-                    allArmies.Sort(CompareArmyTargetingOrder);
                     foreach (Army army in allArmies)
-                        targets.Add(army, army.chooseTarget(allArmies.Where(x => !targets.ContainsValue(x) && x.isImmuneArmy != army.isImmuneArmy)));
+                    {
+                        Army target = army.chooseTarget(allArmies.Where(x => !targets.ContainsValue(x) && x.isImmuneArmy != army.isImmuneArmy)); //choose among valid targets
+                        if (target != null)
+                            targets.Add(army, target);
+                    }
                     foreach (Army attacker in targets.Keys.OrderByDescending(x => x.initiative))
                     {
-                        if (targets[attacker] != null && attacker.units > 0)
+                        if (attacker.units > 0)
                             targets[attacker].takeDamage(attacker.calculateDamage(targets[attacker]));
                     }
                     allArmies.RemoveAll(x => x.units <= 0);

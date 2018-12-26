@@ -19,17 +19,17 @@ namespace Advent
                     input.Add(line);
             }
             List<List<Coordinate>> points = new List<List<Coordinate>>();
-            int ymax = Int32.MinValue;
+            int ymax = int.MinValue;
             int ymaxvel = 0;
-            int ymin = Int32.MaxValue;
+            int ymin = int.MaxValue;
             int yminvel = 0;
 
             foreach (string line in input)
             {
-                int xpos = Int32.Parse(line.Substring(10, 6).Trim());
-                int ypos = Int32.Parse(line.Substring(18, 6).Trim());
-                int xvel = Int32.Parse(line.Substring(36, 2).Trim());
-                int yvel = Int32.Parse(line.Substring(40, 2).Trim());
+                int xpos = int.Parse(line.Substring(10, 6).Trim());
+                int ypos = int.Parse(line.Substring(18, 6).Trim());
+                int xvel = int.Parse(line.Substring(36, 2).Trim());
+                int yvel = int.Parse(line.Substring(40, 2).Trim());
                 points.Add(new List<Coordinate> { new Coordinate(xpos, ypos), new Coordinate(xvel, yvel) });
                 if (ypos > ymax)
                 {
@@ -47,8 +47,8 @@ namespace Advent
             int minSteps = (ymax - ymin - maxDistance / 2) / (yminvel - ymaxvel);
             int additionalSteps = (ymax - ymin + maxDistance / 2) / (yminvel - ymaxvel) - minSteps;
 
-            int xmin = Int32.MaxValue;
-            ymin = Int32.MaxValue;
+            int xmin = int.MaxValue;
+            ymin = int.MaxValue;
             foreach (List<Coordinate> point in points)
             {
                 point[0].x += point[1].x * minSteps;

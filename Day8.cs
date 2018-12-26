@@ -12,7 +12,7 @@ namespace Advent
 
             int[] splitLine;
             using (StreamReader reader = new StreamReader("input/input8.txt"))
-                splitLine = reader.ReadLine().Split(' ').Select(x => Int32.Parse(x)).ToArray();
+                splitLine = reader.ReadLine().Split(' ').Select(x => int.Parse(x)).ToArray();
 
             int index = 0;
             Console.WriteLine("Part 1 Sum: " + processChildPart1(splitLine, ref index));

@@ -28,14 +28,12 @@ namespace Advent
                         stepTree[subsequent].Add(prereq);
                 }
             }
-
-            //TODO: redo part 1 and add print
+            
             List<char> completedSteps = new List<char>();
             while (completedSteps.Count < stepTree.Count)
             {
-                List<char> currSteps = stepTree.Keys.Where(x=>!completedSteps.Contains(x) && stepTree[x].All(completedSteps.Contains)).ToList();
-                currSteps.Sort();
-                completedSteps.AddRange(currSteps);
+                List<char> currSteps = stepTree.Keys.Where(x=>!completedSteps.Contains(x) && stepTree[x].All(completedSteps.Contains)).ToList(); //find all steps whose prereqs are complete
+                completedSteps.AddRange(currSteps.OrderBy(x => x)); //sort before adding
             }
             Console.Write("Step order: " + new string(completedSteps.ToArray()));
 

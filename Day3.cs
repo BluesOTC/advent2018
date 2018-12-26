@@ -21,10 +21,10 @@ namespace Advent
                 {
                     string[] splitLine = line.Split(new char[] { '#', ' ', ',', '@', ':', 'x' });
                     input.Add(splitLine);
-                    int x1 = Int32.Parse(splitLine[4]);
-                    int y1 = Int32.Parse(splitLine[5]);
-                    int x2 = x1 + Int32.Parse(splitLine[7]);
-                    int y2 = y1 + Int32.Parse(splitLine[8]);
+                    int x1 = int.Parse(splitLine[4]);
+                    int y1 = int.Parse(splitLine[5]);
+                    int x2 = x1 + int.Parse(splitLine[7]);
+                    int y2 = y1 + int.Parse(splitLine[8]);
 
                     for (int x = x1; x < x2; x++)
                     {
@@ -42,7 +42,7 @@ namespace Advent
             //Day 3-2
             foreach (string[] splitLine in input)
             {
-                if (!hasAnyConflicts(Int32.Parse(splitLine[4]), Int32.Parse(splitLine[5]), Int32.Parse(splitLine[7]), Int32.Parse(splitLine[8]), conflicts))
+                if (!hasAnyConflicts(int.Parse(splitLine[4]), int.Parse(splitLine[5]), int.Parse(splitLine[7]), int.Parse(splitLine[8]), conflicts))
                 {
                     Console.Write("Notable Claim: " + splitLine[1] + "\n");
                     break;
@@ -89,10 +89,10 @@ namespace Advent
                 {
                     index++;
                     string[] splitLine = line.Split(new char[] { '#', ' ', ',', '@', ':', 'x' });
-                    int x1 = Int32.Parse(splitLine[4]);
-                    int y1 = Int32.Parse(splitLine[5]);
-                    int x2 = x1 + Int32.Parse(splitLine[7]);
-                    int y2 = y1 + Int32.Parse(splitLine[8]);
+                    int x1 = int.Parse(splitLine[4]);
+                    int y1 = int.Parse(splitLine[5]);
+                    int x2 = x1 + int.Parse(splitLine[7]);
+                    int y2 = y1 + int.Parse(splitLine[8]);
 
                     for (int x = x1; x < x2; x++)
                     {

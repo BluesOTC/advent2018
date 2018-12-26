@@ -63,7 +63,7 @@ namespace Advent
                         rooms.Add(currRoom = currRoom.AddNeighbor(-1, 0));
                         break;
                     case '(':
-                        junctions.Push(currRoom);
+                        junctions.Push(currRoom); //store junction start position and return to it as necessary
                         break;
                     case '|':
                         currRoom = junctions.Peek();

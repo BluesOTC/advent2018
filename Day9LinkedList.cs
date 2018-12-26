@@ -14,8 +14,8 @@ namespace Advent
             string[] splitLine; 
             using (StreamReader reader = new StreamReader("input/input9.txt"))
                 splitLine = reader.ReadLine().Split(' ');
-            int players = Int32.Parse(splitLine[0]);
-            int lastMarble = Int32.Parse(splitLine[6]);
+            int players = int.Parse(splitLine[0]);
+            int lastMarble = int.Parse(splitLine[6]);
             lastMarble -= lastMarble % 23;
 
             LinkedList<int> marbles = new LinkedList<int>();

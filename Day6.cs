@@ -23,7 +23,7 @@ namespace Advent
             foreach (string line in input)
             {
                 string[] split = line.Split(',');
-                coordinates.Add(new int[] { Int32.Parse(split[0]), Int32.Parse(split[1].TrimStart(' ')) });
+                coordinates.Add(new int[] { int.Parse(split[0]), int.Parse(split[1].TrimStart(' ')) });
             }
 
             int minX = coordinates.Min(x => x[0]);
@@ -46,7 +46,7 @@ namespace Advent
             {
                 for (int col = 0; col < grid[row].Length; col++)
                 {
-                    int minDistance = Int32.MaxValue;
+                    int minDistance = int.MaxValue;
                     int closestIndex = -1;
                     int sum = 0;
                     for (int index = 0; index < coordinates.Count; index++)

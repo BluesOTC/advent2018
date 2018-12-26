@@ -28,11 +28,11 @@ namespace Advent
                 char type = line[26];
                 if (type == 's')
                 {
-                    sleepTime = Int32.Parse(line.Substring(15, 2));
+                    sleepTime = int.Parse(line.Substring(15, 2));
                 }
                 else if (type == 'p')
                 {
-                    int wakeTime = Int32.Parse(line.Substring(15, 2));
+                    int wakeTime = int.Parse(line.Substring(15, 2));
                     for (int minute = sleepTime; minute < wakeTime; minute++)
                     {
                         sleepTable[currID][minute]++;
@@ -41,7 +41,7 @@ namespace Advent
                 }
                 else
                 {
-                    currID = Int32.Parse(line.Substring(26, 4).Trim());
+                    currID = int.Parse(line.Substring(26, 4).Trim());
                     if (!sleepTable.ContainsKey(currID))
                         sleepTable.Add(currID, new int[61]);
                 }
