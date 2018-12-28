@@ -17,11 +17,12 @@ namespace Advent
             int players = int.Parse(splitLine[0]);
             int lastMarble = int.Parse(splitLine[6]);
             lastMarble -= lastMarble % 23;
+            int part2FinalMarble = lastMarble * 100;
 
             LinkedList<int> marbles = new LinkedList<int>();
             long[] scores = new long[players];
             LinkedListNode<int> currentNode = marbles.AddFirst(0);
-            for (int marble = 1; marble <= lastMarble * 100; marble++)
+            for (int marble = 1; marble <= part2FinalMarble; marble++)
             {
                 if (marble % 23 == 0)
                 {
@@ -29,11 +30,11 @@ namespace Advent
                         currentNode = currentNode.Previous ?? marbles.Last;
                     scores[marble % players] += (currentNode.Previous ?? marbles.Last).Value + marble;
                     marbles.Remove(currentNode.Previous ?? marbles.Last);
+                    if (marble == lastMarble)
+                        Console.WriteLine("Part 1 Score: " + scores.Max());
                 }
                 else
                     currentNode = marbles.AddAfter(currentNode.Next ?? marbles.First, marble);
-                if (marble == lastMarble)
-                    Console.WriteLine("Part 1 Score: " + scores.Max());
             }
             Console.WriteLine("High Score: " + scores.Max());
         }
